@@ -2,8 +2,10 @@ package com.projeto.academia.Projeto.Academia.api.aluno.model.dto;
 
 import com.projeto.academia.Projeto.Academia.api.avaliacao.model.dto.AvaliacaoDTO;
 import com.projeto.academia.Projeto.Academia.generico.model.dto.DataTransferObject;
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import org.hibernate.validator.constraints.Length;
 
 import javax.validation.constraints.Email;
@@ -12,6 +14,8 @@ import java.util.List;
 
 @Builder
 @Getter
+@AllArgsConstructor
+@NoArgsConstructor
 
 public class AlunoDTO implements DataTransferObject {
 
@@ -32,5 +36,4 @@ public class AlunoDTO implements DataTransferObject {
 
     private List<AvaliacaoDTO> avaliacoes;
 
-    public AlunoDTO(){}
 }

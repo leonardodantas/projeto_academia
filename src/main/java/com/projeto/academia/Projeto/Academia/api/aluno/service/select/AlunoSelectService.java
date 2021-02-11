@@ -8,6 +8,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
@@ -19,9 +20,10 @@ public class AlunoSelectService {
     @Autowired
     private IAlunoRepository iAlunoRepository;
 
-    public void teste(Pageable pageable){
+    public List<Aluno> teste(Pageable pageable){
 
         Page<Aluno> alunos = iAlunoRepository.findAll(pageable);
-        alunos.get().collect(Collectors.toList());
+        List<Aluno> alunoss = alunos.get().collect(Collectors.toList());
+        return alunoss;
     }
 }
