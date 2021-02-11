@@ -1,19 +1,25 @@
 package com.projeto.academia.Projeto.Academia.api.aluno.model;
 
-import com.projeto.academia.Projeto.Academia.api.perfil.model.Perfil;
+import com.projeto.academia.Projeto.Academia.api.avaliacao.model.Avaliacao;
 import com.projeto.academia.Projeto.Academia.generico.model.Entity;
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Builder
 @Getter
+@AllArgsConstructor
+@NoArgsConstructor
 
 @javax.persistence.Entity
 public class Aluno implements Entity {
 
     @Id
+    @Column(length = 50)
     private String id;
 
     @Column(length = 120)
@@ -28,10 +34,8 @@ public class Aluno implements Entity {
     @Column(length = 12, name = "numero_celular")
     private String numeroCelular;
 
-    @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name="perfil_id", referencedColumnName = "id")
-    private Perfil perfil;
+    @Transient
+    private List<Avaliacao> avaliacoes;
 
-    public Aluno(){}
 
 }

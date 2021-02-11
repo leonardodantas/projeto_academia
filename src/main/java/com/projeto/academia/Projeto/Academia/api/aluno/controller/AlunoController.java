@@ -1,6 +1,8 @@
 package com.projeto.academia.Projeto.Academia.api.aluno.controller;
 
 import com.projeto.academia.Projeto.Academia.api.aluno.model.dto.AlunoDTO;
+import com.projeto.academia.Projeto.Academia.api.aluno.service.insert.AlunoInsertService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -14,8 +16,11 @@ import javax.validation.Valid;
 @RequestMapping("/aluno")
 public class AlunoController {
 
+    @Autowired
+    private AlunoInsertService alunoInsertService;
 
     public ResponseEntity<?> criarAluno(@Valid @RequestBody AlunoDTO alunoDTO){
-        return null;
+        AlunoDTO alunoSalvo = alunoInsertService.inserirAluno(alunoDTO);
+        return ResponseEntity.ok(alunoSalvo);
     }
 }
