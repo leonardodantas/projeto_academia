@@ -1,6 +1,6 @@
 package com.projeto.academia.Projeto.Academia.api.avaliacao.model;
 
-import com.projeto.academia.Projeto.Academia.generico.model.Entity;
+import com.projeto.academia.Projeto.Academia.utils.model.Entity;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -15,7 +15,7 @@ import java.util.Date;
 @NoArgsConstructor
 
 @javax.persistence.Entity
-public class Avaliacao implements Entity {
+public class Avaliacao extends Entity {
 
     @Id
     @Column(length = 50)

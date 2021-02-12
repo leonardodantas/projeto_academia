@@ -2,7 +2,7 @@ package com.projeto.academia.Projeto.Academia.api.avaliacao.model.assembler;
 
 import com.projeto.academia.Projeto.Academia.api.avaliacao.model.Avaliacao;
 import com.projeto.academia.Projeto.Academia.api.avaliacao.model.dto.AvaliacaoDTO;
-import com.projeto.academia.Projeto.Academia.generico.model.assembler.AbstractAssemblerDTO;
+import com.projeto.academia.Projeto.Academia.utils.model.assembler.AbstractAssemblerDTO;
 import lombok.NonNull;
 import org.springframework.stereotype.Component;
 

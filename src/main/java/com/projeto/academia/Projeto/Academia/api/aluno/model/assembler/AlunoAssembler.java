@@ -5,7 +5,7 @@ import com.projeto.academia.Projeto.Academia.api.aluno.model.dto.AlunoDTO;
 import com.projeto.academia.Projeto.Academia.api.avaliacao.model.Avaliacao;
 import com.projeto.academia.Projeto.Academia.api.avaliacao.model.assembler.AvaliacaoAssembler;
 import com.projeto.academia.Projeto.Academia.api.avaliacao.model.dto.AvaliacaoDTO;
-import com.projeto.academia.Projeto.Academia.generico.model.assembler.AbstractAssemblerDTO;
+import com.projeto.academia.Projeto.Academia.utils.model.assembler.AbstractAssemblerDTO;
 import lombok.NonNull;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;

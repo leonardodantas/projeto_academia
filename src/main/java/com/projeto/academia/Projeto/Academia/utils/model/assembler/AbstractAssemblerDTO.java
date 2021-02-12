@@ -1,7 +1,5 @@
-package com.projeto.academia.Projeto.Academia.generico.model.assembler;
+package com.projeto.academia.Projeto.Academia.utils.model.assembler;
 
-import com.projeto.academia.Projeto.Academia.generico.model.Entity;
-import com.projeto.academia.Projeto.Academia.generico.model.dto.DataTransferObject;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;

@@ -1,11 +1,8 @@
 package com.projeto.academia.Projeto.Academia.api.aluno.model.dto;
 
 import com.projeto.academia.Projeto.Academia.api.avaliacao.model.dto.AvaliacaoDTO;
-import com.projeto.academia.Projeto.Academia.generico.model.dto.DataTransferObject;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import com.projeto.academia.Projeto.Academia.utils.model.dto.DataTransferObject;
+import lombok.*;
 import org.hibernate.validator.constraints.Length;
 
 import javax.validation.constraints.Email;
@@ -19,6 +16,7 @@ import java.util.List;
 
 public class AlunoDTO implements DataTransferObject {
 
+    @Setter
     private String id;
 
     @NotNull(message = "{not.null}") @Length(min = 20, max = 120, message = "{length.invalid}")

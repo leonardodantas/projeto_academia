@@ -1,7 +1,7 @@
 package com.projeto.academia.Projeto.Academia.api.aluno.model;
 
 import com.projeto.academia.Projeto.Academia.api.avaliacao.model.Avaliacao;
-import com.projeto.academia.Projeto.Academia.generico.model.Entity;
+import com.projeto.academia.Projeto.Academia.utils.model.Entity;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -16,10 +16,10 @@ import java.util.List;
 @NoArgsConstructor
 
 @javax.persistence.Entity
-public class Aluno implements Entity {
+public class Aluno extends Entity {
 
     @Id
-    @Column(length = 50)
+    @Column(length = 20)
     private String id;
 
     @Column(length = 120)

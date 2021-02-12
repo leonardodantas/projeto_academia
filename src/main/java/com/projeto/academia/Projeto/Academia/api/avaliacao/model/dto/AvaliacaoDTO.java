@@ -1,6 +1,6 @@
 package com.projeto.academia.Projeto.Academia.api.avaliacao.model.dto;
 
-import com.projeto.academia.Projeto.Academia.generico.model.dto.DataTransferObject;
+import com.projeto.academia.Projeto.Academia.utils.model.dto.DataTransferObject;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;

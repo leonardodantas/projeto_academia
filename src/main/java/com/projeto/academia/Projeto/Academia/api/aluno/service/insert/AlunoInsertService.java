@@ -4,6 +4,7 @@ import com.projeto.academia.Projeto.Academia.api.aluno.model.Aluno;
 import com.projeto.academia.Projeto.Academia.api.aluno.model.assembler.AlunoAssembler;
 import com.projeto.academia.Projeto.Academia.api.aluno.model.dto.AlunoDTO;
 import com.projeto.academia.Projeto.Academia.api.aluno.repository.IAlunoRepository;
+import com.projeto.academia.Projeto.Academia.utils.geradorID.GeradorID;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -17,6 +18,7 @@ public class AlunoInsertService {
     private AlunoAssembler alunoAssembler;
 
     public AlunoDTO inserirAluno(AlunoDTO alunoDTO) {
+        alunoDTO.setId(GeradorID.getInstance().gerarCodigo());
         Aluno aluno = alunoAssembler.dtoParaEntidade(alunoDTO);
         AlunoDTO alunoSalvo = this.inserirAlunoNoBanco(aluno);
         return alunoSalvo;
