@@ -25,7 +25,7 @@ public class Aluno extends Entity {
     @Column(length = 120)
     private String nome;
 
-    @Column(length = 12)
+    @Column(length = 14)
     private String cpf;
 
     @Column(length = 120)

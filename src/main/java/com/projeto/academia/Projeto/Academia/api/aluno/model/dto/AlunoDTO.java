@@ -26,7 +26,8 @@ public class AlunoDTO implements DataTransferObject {
     private String nome;
 
     @ApiModelProperty(value = "CPF do aluno", name = "cpf", dataType = "String", example = "547812366584")
-    @NotNull(message = "{not.null}") @Length(min = 11, max = 12, message = "{length.invalid}")
+    @NotNull(message = "{not.null}") @Length(min = 11, max = 14, message = "{length.invalid}")
+    @Setter
     private String cpf;
 
     @ApiModelProperty(value = "Email do aluno", name = "email", dataType = "String", example = "leonardo@email.com.br")

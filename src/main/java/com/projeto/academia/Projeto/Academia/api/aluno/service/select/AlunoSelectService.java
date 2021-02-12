@@ -5,12 +5,14 @@ import com.projeto.academia.Projeto.Academia.api.aluno.model.assembler.AlunoAsse
 import com.projeto.academia.Projeto.Academia.api.aluno.model.dto.AlunoDTO;
 import com.projeto.academia.Projeto.Academia.api.aluno.repository.IAlunoRepository;
 import com.projeto.academia.Projeto.Academia.utils.response.CollectionResponse;
+import org.checkerframework.checker.nullness.Opt;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class AlunoSelectService {
@@ -26,6 +28,25 @@ public class AlunoSelectService {
         List<AlunoDTO> alunoDTOS = alunoAssembler.muitasEntidadesParaMuitosDTOs(alunos.getContent());
         CollectionResponse<AlunoDTO,Aluno> alunosReponseDTO = new CollectionResponse<AlunoDTO,Aluno>(alunos, alunoDTOS);
         return alunosReponseDTO;
+    }
+
+    public AlunoDTO recuperaAlunoPorCPF(String cpf){
+        AlunoDTO alunoDTO = new AlunoDTO();
+        Optional<Aluno> aluno = recuperaAlunoPorCPFNoBanco(cpf);
+         if(aluno.isPresent()) {
+             alunoDTO = alunoAssembler.entidadeParaDTO(aluno.get());
+         }
+        return  alunoDTO;
+    }
+
+    private Optional<Aluno> recuperaAlunoPorCPFNoBanco(String cpf) {
+        Optional<Aluno> aluno = Optional.empty();
+        try {
+            aluno = iAlunoRepository.findByCpf(cpf);
+        } catch (Exception e){
+            throw new RuntimeException(e);
+        }
+        return aluno;
     }
 
     private Page<Aluno> recuperarListaDeAlunosDTODoBanco(Pageable pageable){
