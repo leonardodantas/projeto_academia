@@ -22,6 +22,10 @@ public class ValidarCPF {
     }
 
     private String gerarCPFComFormatacao(String cpf){
+        if (cpf.length() != 11) {
+            throw new ResponseStatusException(
+                    HttpStatus.BAD_REQUEST, "CPF com tamanho fora do padrão");
+        }
         StringBuilder stringBuilder = new StringBuilder();
         stringBuilder.append(cpf.substring(0,3)).append(".");
         stringBuilder.append(cpf.substring(3,6)).append(".");
@@ -40,8 +44,7 @@ public class ValidarCPF {
     }
 
     private String recuperarApenasNumeros(String cpf) {
-        return cpf.replaceAll("[\\d+]","");
- //       return p.matcher(cpf).group();
+        return cpf.replaceAll("[\\D+]","");
     }
 
 }
