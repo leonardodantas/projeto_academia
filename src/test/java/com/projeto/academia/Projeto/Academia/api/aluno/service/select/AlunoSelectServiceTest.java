@@ -50,7 +50,7 @@ public class AlunoSelectServiceTest {
 
     @Test
     public void deveRecuperarAlunoPorCPF(){
-        String cpf = "45678912345";
+        String cpf = "456.789.123-45";
 
          Aluno aluno = Aluno.builder()
                 .id("123")
@@ -70,14 +70,8 @@ public class AlunoSelectServiceTest {
 
     @Test
     public void naoDeveRecuperarAlunoPorCPF(){
-        String cpf = "45678912345";
 
-        Aluno aluno = Aluno.builder()
-                .id("123")
-                .cpf(cpf)
-                .build();
-
-        AlunoDTO alunoRecuperado = alunoSelectService.recuperaAlunoPorCPF("123456");
+        AlunoDTO alunoRecuperado = alunoSelectService.recuperaAlunoPorCPF("12345678941");
 
         Assertions.assertNull(alunoRecuperado.getId());
     }

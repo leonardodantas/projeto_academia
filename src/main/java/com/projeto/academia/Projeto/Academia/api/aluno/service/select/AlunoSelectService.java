@@ -4,6 +4,7 @@ import com.projeto.academia.Projeto.Academia.api.aluno.model.Aluno;
 import com.projeto.academia.Projeto.Academia.api.aluno.model.assembler.AlunoAssembler;
 import com.projeto.academia.Projeto.Academia.api.aluno.model.dto.AlunoDTO;
 import com.projeto.academia.Projeto.Academia.api.aluno.repository.IAlunoRepository;
+import com.projeto.academia.Projeto.Academia.utils.cpf.ValidarCPF;
 import com.projeto.academia.Projeto.Academia.utils.response.CollectionResponse;
 import org.checkerframework.checker.nullness.Opt;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,8 +32,9 @@ public class AlunoSelectService {
     }
 
     public AlunoDTO recuperaAlunoPorCPF(String cpf){
+        String cpfFormatado = new ValidarCPF().formatarCPF(cpf);
         AlunoDTO alunoDTO = new AlunoDTO();
-        Optional<Aluno> aluno = recuperaAlunoPorCPFNoBanco(cpf);
+        Optional<Aluno> aluno = recuperaAlunoPorCPFNoBanco(cpfFormatado);
          if(aluno.isPresent()) {
              alunoDTO = alunoAssembler.entidadeParaDTO(aluno.get());
          }

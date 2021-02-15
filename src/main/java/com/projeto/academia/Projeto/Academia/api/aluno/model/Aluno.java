@@ -2,10 +2,7 @@ package com.projeto.academia.Projeto.Academia.api.aluno.model;
 
 import com.projeto.academia.Projeto.Academia.api.avaliacao.model.Avaliacao;
 import com.projeto.academia.Projeto.Academia.utils.model.Entity;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.persistence.*;
 import java.util.List;
@@ -25,6 +22,7 @@ public class Aluno extends Entity {
     @Column(length = 120)
     private String nome;
 
+    @Setter
     @Column(length = 14)
     private String cpf;
 
