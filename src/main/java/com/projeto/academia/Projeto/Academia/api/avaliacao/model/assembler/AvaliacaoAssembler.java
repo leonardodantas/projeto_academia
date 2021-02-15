@@ -17,6 +17,7 @@ public class AvaliacaoAssembler extends AbstractAssemblerDTO<Avaliacao, Avaliaca
                 .altura(avaliacao.getAltura())
                 .peso(avaliacao.getPeso())
                 .imc(avaliacao.getImc())
+                .dataAtualizacaoAvaliacao(avaliacao.getDataAtualizacaoAvaliacao())
                 .build();
     }
 
@@ -28,6 +29,7 @@ public class AvaliacaoAssembler extends AbstractAssemblerDTO<Avaliacao, Avaliaca
                 .dataAvaliacao(avaliacaoDTO.getDataAvaliacao())
                 .imc(avaliacaoDTO.getImc())
                 .peso(avaliacaoDTO.getPeso())
+                .dataAtualizacaoAvaliacao(avaliacaoDTO.getDataAtualizacaoAvaliacao())
                 .build();
     }
 }

@@ -28,6 +28,10 @@ public class Avaliacao extends Entity {
     @Column(name = "data_avaliacao")
     private Date dataAvaliacao;
 
+    @Temporal(TemporalType.DATE)
+    @Column(name = "data_atualizacao_avaliacao")
+    private Date dataAtualizacaoAvaliacao;
+
     private double peso;
     private double altura;
     private double imc;

@@ -39,6 +39,7 @@ public class AlunoDTO implements DataTransferObject {
     @NotNull @Length(min = 8, max = 12)
     private String numeroCelular;
 
+    @Setter
     @ApiModelProperty(value = "Lista de avaliações realizadas do aluno", name = "avaliacoes", dataType = "List<String>")
     private List<AvaliacaoDTO> avaliacoes;
 

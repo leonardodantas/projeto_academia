@@ -4,13 +4,20 @@ import com.projeto.academia.Projeto.Academia.api.aluno.model.Aluno;
 import com.projeto.academia.Projeto.Academia.api.aluno.model.assembler.AlunoAssembler;
 import com.projeto.academia.Projeto.Academia.api.aluno.model.dto.AlunoDTO;
 import com.projeto.academia.Projeto.Academia.api.aluno.repository.IAlunoRepository;
+import com.projeto.academia.Projeto.Academia.api.avaliacao.model.Avaliacao;
+import com.projeto.academia.Projeto.Academia.api.avaliacao.model.assembler.AvaliacaoAssembler;
+import com.projeto.academia.Projeto.Academia.api.avaliacao.model.dto.AvaliacaoDTO;
+import com.projeto.academia.Projeto.Academia.api.avaliacao.repository.IAvaliacaoRepository;
+import com.projeto.academia.Projeto.Academia.api.avaliacao.service.select.AvaliacaoSelectService;
 import com.projeto.academia.Projeto.Academia.utils.cpf.ValidarCPF;
 import com.projeto.academia.Projeto.Academia.utils.response.CollectionResponse;
 import org.checkerframework.checker.nullness.Opt;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
 import java.util.Optional;
@@ -24,6 +31,9 @@ public class AlunoSelectService {
     @Autowired
     private IAlunoRepository iAlunoRepository;
 
+    @Autowired
+    private AvaliacaoSelectService avaliacaoSelectService;
+
     public CollectionResponse<AlunoDTO,Aluno> recuperarTodos(Pageable pageable) {
         Page<Aluno> alunos = recuperarListaDeAlunosDTODoBanco(pageable);
         List<AlunoDTO> alunoDTOS = alunoAssembler.muitasEntidadesParaMuitosDTOs(alunos.getContent());
@@ -33,12 +43,43 @@ public class AlunoSelectService {
 
     public AlunoDTO recuperaAlunoPorCPF(String cpf){
         String cpfFormatado = new ValidarCPF().formatarCPF(cpf);
-        AlunoDTO alunoDTO = new AlunoDTO();
         Optional<Aluno> aluno = recuperaAlunoPorCPFNoBanco(cpfFormatado);
-         if(aluno.isPresent()) {
-             alunoDTO = alunoAssembler.entidadeParaDTO(aluno.get());
-         }
+        AlunoDTO alunoDTO = this.verificaEConverteAlunoRecoperado(aluno);
         return  alunoDTO;
+    }
+
+    public AlunoDTO recuperarAlunoPorId(String id){
+        Optional<Aluno> aluno = recuperarAlunoPorIDNoBanco(id);
+        AlunoDTO alunoDTO = this.verificaEConverteAlunoRecoperado(aluno);
+        return  alunoDTO;
+    }
+
+    public AlunoDTO recuperarAlunoETodasAsAvalicoes(String idAluno) {
+
+        AlunoDTO alunoDTO = recuperarAlunoPorId(idAluno);
+        if (!alunoDTO.getId().isEmpty()) {
+            List<AvaliacaoDTO> avaliacaoDTOList = avaliacaoSelectService.recuperarListaDeAvaliacoesPeloIDAluno(idAluno);
+            alunoDTO.setAvaliacoes(avaliacaoDTOList);
+        }
+        return alunoDTO;
+    }
+
+    private AlunoDTO verificaEConverteAlunoRecoperado(Optional<Aluno> aluno){
+        AlunoDTO alunoDTO = new AlunoDTO();
+        if(aluno.isPresent()) {
+            alunoDTO = alunoAssembler.entidadeParaDTO(aluno.get());
+        }
+        return  alunoDTO;
+    }
+
+    private Optional<Aluno> recuperarAlunoPorIDNoBanco(String id){
+        Optional<Aluno> aluno = Optional.empty();
+        try {
+            aluno = iAlunoRepository.findById(id);
+        }catch (Exception e){
+            throw new RuntimeException();
+        }
+        return aluno;
     }
 
     private Optional<Aluno> recuperaAlunoPorCPFNoBanco(String cpf) {
