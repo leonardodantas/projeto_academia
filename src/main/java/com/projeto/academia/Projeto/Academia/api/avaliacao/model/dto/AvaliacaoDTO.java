@@ -19,15 +19,16 @@ public class AvaliacaoDTO implements DataTransferObject {
     @ApiModelProperty(value = "Id da avaliação", name = "id", dataType = "String", example = "ahnb594aa41fd98q5")
     private String id;
 
+    @Setter
     @ApiModelProperty(value = "Id do aluno", name = "idAluno", dataType = "String", example = "ahnb594aa41fd98q5")
     private String idAluno;
 
     @Setter
-    @ApiModelProperty(value = "Data da avaliação", name = "dataAvaliacao", dataType = "Date", example = "12/02/2021")
+    @ApiModelProperty(value = "Data da avaliação", name = "dataAvaliacao", dataType = "Date", example = "12/02/2021", hidden = true)
     private Date dataAvaliacao;
 
     @Setter
-    @ApiModelProperty(value = "Data da atualização avaliação", name = "dataAtualizacaoAvaliacao", dataType = "Date", example = "12/02/2021")
+    @ApiModelProperty(value = "Data da atualização avaliação", name = "dataAtualizacaoAvaliacao", dataType = "Date", example = "12/02/2021", hidden = true)
     private Date dataAtualizacaoAvaliacao;
 
     @ApiModelProperty(value = "Peso da avaliação", name = "peso", dataType = "Double", example = "85.10")
@@ -39,6 +40,6 @@ public class AvaliacaoDTO implements DataTransferObject {
     private double altura;
 
     @Setter
-    @ApiModelProperty(value = "IMC da avaliação", name = "imc", dataType = "Double", example = "85.10")
+    @ApiModelProperty(value = "IMC da avaliação", name = "imc", dataType = "Double", example = "85.10", hidden = true)
     private double imc;
 }

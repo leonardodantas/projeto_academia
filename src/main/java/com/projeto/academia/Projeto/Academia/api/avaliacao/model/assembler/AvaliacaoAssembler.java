@@ -13,6 +13,7 @@ public class AvaliacaoAssembler extends AbstractAssemblerDTO<Avaliacao, Avaliaca
     public AvaliacaoDTO entidadeParaDTO(@NonNull Avaliacao avaliacao) {
         return AvaliacaoDTO.builder()
                 .id(avaliacao.getId())
+                .idAluno(avaliacao.getIdAluno())
                 .dataAvaliacao(avaliacao.getDataAvaliacao())
                 .altura(avaliacao.getAltura())
                 .peso(avaliacao.getPeso())
@@ -25,6 +26,7 @@ public class AvaliacaoAssembler extends AbstractAssemblerDTO<Avaliacao, Avaliaca
     public Avaliacao dtoParaEntidade(@NonNull AvaliacaoDTO avaliacaoDTO) {
         return Avaliacao.builder()
                 .id(avaliacaoDTO.getId())
+                .idAluno(avaliacaoDTO.getIdAluno())
                 .altura(avaliacaoDTO.getAltura())
                 .dataAvaliacao(avaliacaoDTO.getDataAvaliacao())
                 .imc(avaliacaoDTO.getImc())

@@ -16,9 +16,6 @@ import java.util.Optional;
 @Service
 public class AvaliacaoSelectService {
 
-    //recuperar ultima avaliação de aluno
-    //recuperar ultima avaliação atualizada de aluno
-
     @Autowired
     private IAvaliacaoRepository iAvaliacaoRepository;
 
@@ -83,5 +80,42 @@ public class AvaliacaoSelectService {
         return avaliacaos;
     }
 
+    //recuperar ultima avaliação atualizada de aluno
 
+    public AvaliacaoDTO recuperarUltimaAvaliacaoDoAluno(String idAluno){
+        AvaliacaoDTO avaliacaoDTO = this.recuperarUltimaAvaliacaoDoAlunoNoBanco(idAluno);
+        return avaliacaoDTO;
+    }
+
+    private AvaliacaoDTO recuperarUltimaAvaliacaoDoAlunoNoBanco(String idAluno){
+        AvaliacaoDTO avaliacaoDTO = new AvaliacaoDTO();
+        try {
+            Optional<Avaliacao> avaliacao = iAvaliacaoRepository.findFirstByIdAlunoOrderByDataAvaliacaoDesc(idAluno);
+            if (avaliacao.isPresent()){
+                avaliacaoDTO = avaliacaoAssembler.entidadeParaDTO(avaliacao.get());
+            }
+        } catch (Exception e){
+            throw new RuntimeException(e);
+        }
+        return avaliacaoDTO;
+    }
+
+
+    public AvaliacaoDTO recuperarUltimaAvaliacaoDoAlunoAtualizada(String idAluno) {
+        AvaliacaoDTO avaliacaoDTO = this.recuperarUltimaAvaliacaoAtualizadaDoAlunoNoBanco(idAluno);
+        return avaliacaoDTO;
+    }
+
+    private AvaliacaoDTO recuperarUltimaAvaliacaoAtualizadaDoAlunoNoBanco(String idAluno) {
+        AvaliacaoDTO avaliacaoDTO = new AvaliacaoDTO();
+        try {
+            Optional<Avaliacao> avaliacao = iAvaliacaoRepository.findFirstByIdAlunoOrderByDataAtualizacaoAvaliacaoDesc(idAluno);
+            if (avaliacao.isPresent()){
+                avaliacaoDTO = avaliacaoAssembler.entidadeParaDTO(avaliacao.get());
+            }
+        } catch (Exception e){
+            throw new RuntimeException(e);
+        }
+        return avaliacaoDTO;
+    }
 }

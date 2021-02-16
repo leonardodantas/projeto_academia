@@ -2,7 +2,6 @@ package com.projeto.academia.Projeto.Academia.api.avaliacao.service.delete;
 
 import com.projeto.academia.Projeto.Academia.api.aluno.model.dto.AlunoDTO;
 import com.projeto.academia.Projeto.Academia.api.aluno.service.select.AlunoSelectService;
-import com.projeto.academia.Projeto.Academia.api.avaliacao.model.Avaliacao;
 import com.projeto.academia.Projeto.Academia.api.avaliacao.model.assembler.AvaliacaoAssembler;
 import com.projeto.academia.Projeto.Academia.api.avaliacao.model.dto.AvaliacaoDTO;
 import com.projeto.academia.Projeto.Academia.api.avaliacao.repository.IAvaliacaoRepository;
@@ -11,8 +10,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
-
-import java.util.List;
 
 @Service
 public class AvalicaoDeleteService {
@@ -42,7 +39,7 @@ public class AvalicaoDeleteService {
         return avaliacaoDTO;
     }
 
-    public AlunoDTO removerTodasAsAvaliacoesDoUsuario(String idAluno){
+    public AlunoDTO removerTodasAsAvaliacoesDoAluno(String idAluno){
 
         AlunoDTO alunoDTO = alunoSelectService.recuperarAlunoETodasAsAvalicoes(idAluno);
         if (alunoDTO.getId().isEmpty()) {
@@ -53,12 +50,14 @@ public class AvalicaoDeleteService {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Aluno não possui nenhuma avaliação");
         }
 
+        this.removerTodasAvalicoesDeAlunoNoBanco(alunoDTO.getId());
+
         return alunoDTO;
     }
 
     private void removerTodasAvalicoesDeAlunoNoBanco(String idAluno){
         try {
-            iAvaliacaoRepository.deleteByIdAluno(idAluno);
+            iAvaliacaoRepository.deleteAllByIdAluno(idAluno);
         } catch (Exception e){
             throw new RuntimeException(e);
         }

@@ -6,9 +6,12 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface IAvaliacaoRepository extends JpaRepository<Avaliacao, String> {
     Page<Avaliacao> findAllByIdAluno(String idAluno, Pageable pageable);
-    void deleteByIdAluno(String idAluno);
     List<Avaliacao> findAllByIdAluno(String idUsuario);
+    void deleteAllByIdAluno(String idAluno);
+    Optional<Avaliacao> findFirstByIdAlunoOrderByDataAvaliacaoDesc(String idAluno);
+    Optional<Avaliacao> findFirstByIdAlunoOrderByDataAtualizacaoAvaliacaoDesc(String idAluno);
 }

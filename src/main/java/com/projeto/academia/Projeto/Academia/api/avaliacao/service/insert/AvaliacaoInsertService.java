@@ -7,6 +7,7 @@ import com.projeto.academia.Projeto.Academia.api.avaliacao.model.Avaliacao;
 import com.projeto.academia.Projeto.Academia.api.avaliacao.model.assembler.AvaliacaoAssembler;
 import com.projeto.academia.Projeto.Academia.api.avaliacao.model.dto.AvaliacaoDTO;
 import com.projeto.academia.Projeto.Academia.api.avaliacao.repository.IAvaliacaoRepository;
+import com.projeto.academia.Projeto.Academia.api.avaliacao.service.select.AvaliacaoSelectService;
 import com.projeto.academia.Projeto.Academia.utils.geradorID.GeradorID;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -14,6 +15,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.util.Date;
+import java.util.Objects;
 
 @Service
 public class AvaliacaoInsertService {
@@ -27,11 +29,14 @@ public class AvaliacaoInsertService {
     @Autowired
     private AlunoSelectService alunoSelectService;
 
+    @Autowired
+    private AvaliacaoSelectService avaliacaoSelectService;
+
     public AvaliacaoDTO criarAvaliacao(AvaliacaoDTO avaliacaoDTO) {
 
         avaliacaoDTO.setId(GeradorID.getInstance().gerarCodigo());
 
-        if (Strings.isNullOrEmpty(avaliacaoDTO.getDataAvaliacao().toString())) {
+        if (Objects.isNull(avaliacaoDTO.getDataAvaliacao())) {
             avaliacaoDTO.setDataAvaliacao(new Date());
         }
         AvaliacaoDTO avaliacaoDTOSalva = this.preparararAvaliacaoParaSerSalvaOuAtualizada(avaliacaoDTO);
@@ -44,9 +49,17 @@ public class AvaliacaoInsertService {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Avaliação para atualização não possui ID");
         }
 
-        if (Strings.isNullOrEmpty(avaliacaoDTO.getDataAtualizacaoAvaliacao().toString())){
+        AvaliacaoDTO avaliacaoExiste = this.avaliacaoSelectService.recuperarAvaliacaoPeloID(avaliacaoDTO.getId());
+
+        if (Strings.isNullOrEmpty(avaliacaoExiste.getId())){
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Nenhuma avaliação para ser atualizada");
+        }
+
+        if (Objects.isNull(avaliacaoDTO.getDataAtualizacaoAvaliacao())){
             avaliacaoDTO.setDataAtualizacaoAvaliacao(new Date());
         }
+        avaliacaoDTO.setIdAluno(avaliacaoExiste.getIdAluno());
+        avaliacaoDTO.setDataAvaliacao(avaliacaoExiste.getDataAvaliacao());
 
         AvaliacaoDTO avaliacaoDTOSalva = this.preparararAvaliacaoParaSerSalvaOuAtualizada(avaliacaoDTO);
         return  avaliacaoDTOSalva;
@@ -57,6 +70,11 @@ public class AvaliacaoInsertService {
         if (Strings.isNullOrEmpty(alunoDTO.getId())) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Aluno não existe na base de dados");
         }
+        AlunoDTO alunoComCPF = alunoSelectService.recuperaAlunoPorCPF(alunoDTO.getCpf());
+        if (Strings.isNullOrEmpty(alunoComCPF.getId())) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "CPF não existe na base de dados");
+        }
+        avaliacaoDTO.setIdAluno(alunoComCPF.getId());
     }
 
     private AvaliacaoDTO preparararAvaliacaoParaSerSalvaOuAtualizada(AvaliacaoDTO avaliacaoDTO){
@@ -81,6 +99,6 @@ public class AvaliacaoInsertService {
 
     private void calcularIMC(AvaliacaoDTO avaliacaoDTO) {
         double alturaAoQuadrado = avaliacaoDTO.getAltura() * avaliacaoDTO.getAltura();
-        avaliacaoDTO.setImc(avaliacaoDTO.getPeso() * alturaAoQuadrado);
+        avaliacaoDTO.setImc(avaliacaoDTO.getPeso() / alturaAoQuadrado);
     }
 }
