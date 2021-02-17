@@ -80,8 +80,6 @@ public class AvaliacaoSelectService {
         return avaliacaos;
     }
 
-    //recuperar ultima avaliação atualizada de aluno
-
     public AvaliacaoDTO recuperarUltimaAvaliacaoDoAluno(String idAluno){
         AvaliacaoDTO avaliacaoDTO = this.recuperarUltimaAvaliacaoDoAlunoNoBanco(idAluno);
         return avaliacaoDTO;

@@ -1,5 +1,6 @@
 package com.projeto.academia.Projeto.Academia.api.avaliacao.service.select;
 
+import com.projeto.academia.Projeto.Academia.api.aluno.model.dto.AlunoDTO;
 import com.projeto.academia.Projeto.Academia.api.avaliacao.model.Avaliacao;
 import com.projeto.academia.Projeto.Academia.api.avaliacao.model.assembler.AvaliacaoAssembler;
 import com.projeto.academia.Projeto.Academia.api.avaliacao.model.dto.AvaliacaoDTO;
@@ -59,6 +60,10 @@ public class AvaliacaoSelectServiceTest {
         when(iAvaliacaoRepository.findById(idAvaliacao)).thenReturn(Optional.of(avaliacao));
         when(avaliacaoAssembler.entidadeParaDTO(avaliacao)).thenReturn(avaliacaoDTO);
 
+        String idAluno = "123456";
+        List<Avaliacao> avaliacaoList = avaliacaoPage.getContent();
+        when(iAvaliacaoRepository.findAllByIdAluno(idAluno)).thenReturn(avaliacaoList);
+
     }
 
     @Test
@@ -83,12 +88,73 @@ public class AvaliacaoSelectServiceTest {
     }
 
     @Test
-    public void naoDeveRecuperarAvaliacao(){
+    public void naoDeveRecuperarAvaliacaoPeloID(){
         String idAvaliacao = "12";
         AvaliacaoDTO dto = avaliacaoSelectService.recuperarAvaliacaoPeloID(idAvaliacao);
         assertNull(dto.getId());
     }
 
+    @Test
+    public void deveRecuperarListaDeAvaliacoesPeloIDDoAluno(){
+        String idAluno = "123456";
+        List<AvaliacaoDTO> avaliacaoDTOS = this.avaliacaoSelectService.recuperarListaDeAvaliacoesPeloIDAluno(idAluno);
+        assertEquals(avaliacaoDTOS.size(), 5);
+    }
+
+    @Test
+    public void naoDeveRecuperarListaDeAvaliacoesPeloIDDoAluno(){
+        String idAluno = "654789";
+        List<AvaliacaoDTO> avaliacaoDTOS = this.avaliacaoSelectService.recuperarListaDeAvaliacoesPeloIDAluno(idAluno);
+        assertEquals(avaliacaoDTOS.size(), 0);
+    }
+
+    @Test
+    public void deveRecuperarUltimaAvaliacaoDoAluno(){
+        String idAluno = "123456";
+        Avaliacao avaliacao = Avaliacao.builder()
+                .idAluno(idAluno)
+                .build();
+
+        AvaliacaoDTO avaliacaoDTO = AvaliacaoDTO.builder()
+                .idAluno(idAluno)
+                .build();
+        when(iAvaliacaoRepository.findFirstByIdAlunoOrderByDataAvaliacaoDesc(idAluno)).thenReturn(Optional.of(avaliacao));
+        when(avaliacaoAssembler.entidadeParaDTO(avaliacao)).thenReturn(avaliacaoDTO);
+
+        AvaliacaoDTO dto =  avaliacaoSelectService.recuperarUltimaAvaliacaoDoAluno(idAluno);
+        assertEquals(dto.getIdAluno(), idAluno);
+    }
+
+    @Test
+    public void naoDeveRecuperarUltimaAvaliacaoDoAluno(){
+        String idAluno = "1";
+        AvaliacaoDTO dto =  avaliacaoSelectService.recuperarUltimaAvaliacaoDoAluno(idAluno);
+        assertNull(dto.getIdAluno());
+    }
+
+    @Test
+    public void deveRecuperarUltimaAvaliacaoAtualizadaDoAluno(){
+        String idAluno = "123456";
+        Avaliacao avaliacao = Avaliacao.builder()
+                .idAluno(idAluno)
+                .build();
+
+        AvaliacaoDTO avaliacaoDTO = AvaliacaoDTO.builder()
+                .idAluno(idAluno)
+                .build();
+        when(iAvaliacaoRepository.findFirstByIdAlunoOrderByDataAtualizacaoAvaliacaoDesc(idAluno)).thenReturn(Optional.of(avaliacao));
+        when(avaliacaoAssembler.entidadeParaDTO(avaliacao)).thenReturn(avaliacaoDTO);
+
+        AvaliacaoDTO dto =  avaliacaoSelectService.recuperarUltimaAvaliacaoDoAlunoAtualizada(idAluno);
+        assertEquals(dto.getIdAluno(), idAluno);
+    }
+
+    @Test
+    public void naoDeveRecuperarUltimaAvaliacaoAtualizadaDoAluno(){
+        String idAluno = "1";
+        AvaliacaoDTO dto =  avaliacaoSelectService.recuperarUltimaAvaliacaoDoAlunoAtualizada(idAluno);
+        assertNull(dto.getIdAluno());
+    }
 
     private Page<Avaliacao> gerarPageableAvaliacoes(){
         List<Avaliacao> avaliacaoList = new ArrayList<>();
