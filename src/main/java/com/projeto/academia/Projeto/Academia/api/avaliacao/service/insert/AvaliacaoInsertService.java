@@ -14,6 +14,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
+import java.text.DecimalFormat;
 import java.util.Date;
 import java.util.Objects;
 
@@ -98,7 +99,9 @@ public class AvaliacaoInsertService {
     }
 
     private void calcularIMC(AvaliacaoDTO avaliacaoDTO) {
+        DecimalFormat decimalFormat = new DecimalFormat("###,##0.00");
         double alturaAoQuadrado = avaliacaoDTO.getAltura() * avaliacaoDTO.getAltura();
-        avaliacaoDTO.setImc(avaliacaoDTO.getPeso() / alturaAoQuadrado);
+        double imcCalculado = avaliacaoDTO.getPeso() / alturaAoQuadrado;
+        avaliacaoDTO.setImc(Double.parseDouble(decimalFormat.format(imcCalculado).replace(",", ".")));
     }
 }
