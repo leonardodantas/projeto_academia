@@ -46,7 +46,7 @@ public class AvaliacaoInsertService {
 
     public AvaliacaoDTO atualizarAvaliacao(AvaliacaoDTO avaliacaoDTO){
 
-        if (avaliacaoDTO.getId().isEmpty()) {
+        if (Strings.isNullOrEmpty(avaliacaoDTO.getId())) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Avaliação para atualização não possui ID");
         }
 
