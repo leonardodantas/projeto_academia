@@ -1,5 +1,6 @@
 package com.projeto.academia.Projeto.Academia.api.avaliacao.service.delete;
 
+import com.google.common.base.Strings;
 import com.projeto.academia.Projeto.Academia.api.aluno.model.dto.AlunoDTO;
 import com.projeto.academia.Projeto.Academia.api.aluno.service.select.AlunoSelectService;
 import com.projeto.academia.Projeto.Academia.api.avaliacao.model.assembler.AvaliacaoAssembler;
@@ -10,6 +11,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
+
+import java.util.Objects;
 
 @Service
 public class AvalicaoDeleteService {
@@ -30,7 +33,7 @@ public class AvalicaoDeleteService {
 
         AvaliacaoDTO avaliacaoDTO = avaliacaoSelectService.recuperarAvaliacaoPeloID(idAvaliacao);
 
-        if (avaliacaoDTO.getId().isEmpty()) {
+        if (Strings.isNullOrEmpty(avaliacaoDTO.getId())) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "ID para a avaliação não existe");
         }
 
@@ -42,11 +45,11 @@ public class AvalicaoDeleteService {
     public AlunoDTO removerTodasAsAvaliacoesDoAluno(String idAluno){
 
         AlunoDTO alunoDTO = alunoSelectService.recuperarAlunoETodasAsAvalicoes(idAluno);
-        if (alunoDTO.getId().isEmpty()) {
+        if (Strings.isNullOrEmpty(alunoDTO.getId())) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Id não existe na base de dados de alunos");
         }
 
-        if (alunoDTO.getAvaliacoes().size() == 0){
+        if (Objects.isNull(alunoDTO.getAvaliacoes())){
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Aluno não possui nenhuma avaliação");
         }
 
