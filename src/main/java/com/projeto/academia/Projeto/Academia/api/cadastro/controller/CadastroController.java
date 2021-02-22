@@ -23,6 +23,6 @@ public class CadastroController {
     @ApiOperation(value = "Criação de um novo cadastro")
     public ResponseEntity<?> criarCadastro(@Valid @RequestBody CadastroDTO cadastroDTO){
         CadastroDTO cadastroCriado = cadastroInsertService.criarCadastro(cadastroDTO);
-        return null;
+        return ResponseEntity.ok(cadastroCriado);
     }
 }

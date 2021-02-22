@@ -1,11 +1,16 @@
 package com.projeto.academia.Projeto.Academia.api.formaPagamento.model;
 
 import com.projeto.academia.Projeto.Academia.utils.model.Entity;
+import lombok.Builder;
+import lombok.Getter;
 
 import javax.persistence.Column;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.Id;
+
+@Builder
+@Getter
 
 @javax.persistence.Entity
 public class FormaPagamento extends Entity {

@@ -4,10 +4,7 @@ import com.projeto.academia.Projeto.Academia.api.formaPagamento.model.FormaPagam
 import com.projeto.academia.Projeto.Academia.api.formaPagamento.model.dto.FormaPagamentoDTO;
 import com.projeto.academia.Projeto.Academia.utils.model.dto.DataTransferObject;
 import io.swagger.annotations.ApiModelProperty;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 @Builder
 @Getter
@@ -15,6 +12,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class CadastroDTO implements DataTransferObject {
 
+    @Setter
     @ApiModelProperty(value = "Id do Cadastro", name = "id", dataType = "String", example = "ahnb594aa41fd98q5")
     private String id;
 
