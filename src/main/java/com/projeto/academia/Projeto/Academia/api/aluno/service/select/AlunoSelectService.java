@@ -4,14 +4,10 @@ import com.projeto.academia.Projeto.Academia.api.aluno.model.Aluno;
 import com.projeto.academia.Projeto.Academia.api.aluno.model.assembler.AlunoAssembler;
 import com.projeto.academia.Projeto.Academia.api.aluno.model.dto.AlunoDTO;
 import com.projeto.academia.Projeto.Academia.api.aluno.repository.IAlunoRepository;
-import com.projeto.academia.Projeto.Academia.api.avaliacao.model.Avaliacao;
-import com.projeto.academia.Projeto.Academia.api.avaliacao.model.assembler.AvaliacaoAssembler;
 import com.projeto.academia.Projeto.Academia.api.avaliacao.model.dto.AvaliacaoDTO;
-import com.projeto.academia.Projeto.Academia.api.avaliacao.repository.IAvaliacaoRepository;
 import com.projeto.academia.Projeto.Academia.api.avaliacao.service.select.AvaliacaoSelectService;
 import com.projeto.academia.Projeto.Academia.utils.cpf.ValidarCPF;
 import com.projeto.academia.Projeto.Academia.utils.response.CollectionResponse;
-import org.checkerframework.checker.nullness.Opt;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -50,6 +46,15 @@ public class AlunoSelectService {
 
     public AlunoDTO recuperarAlunoPorId(String id){
         Optional<Aluno> aluno = recuperarAlunoPorIDNoBanco(id);
+        AlunoDTO alunoDTO = this.verificaEConverteAlunoRecoperado(aluno);
+        return  alunoDTO;
+    }
+
+    public AlunoDTO lancaExcecaoSenaoExistirAlunoPorID(String id){
+        Optional<Aluno> aluno = recuperarAlunoPorIDNoBanco(id);
+        if (!aluno.isPresent()) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Aluno não existe na base de dados");
+        }
         AlunoDTO alunoDTO = this.verificaEConverteAlunoRecoperado(aluno);
         return  alunoDTO;
     }

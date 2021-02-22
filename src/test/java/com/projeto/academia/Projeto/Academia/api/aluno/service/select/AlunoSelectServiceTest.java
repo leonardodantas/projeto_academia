@@ -76,6 +76,21 @@ public class AlunoSelectServiceTest {
         Assertions.assertNull(alunoRecuperado.getId());
     }
 
+    @Test(expected = Exception.class)
+    public void deveLancaExcecaoPorNaoExistirAlunoComIDInformado(){
+        String id = "564";
+        alunoSelectService.lancaExcecaoSenaoExistirAlunoPorID(id);
+    }
+
+    @Test
+    public void deveRecuperarAlunoPeloID(){
+        String id = "123";
+        Aluno aluno = Aluno.builder().id(id).build();
+        when(iAlunoRepository.findById(id)).thenReturn(Optional.of(aluno));
+        when(alunoAssembler.entidadeParaDTO(aluno)).thenReturn(AlunoDTO.builder().id(id).build());
+        AlunoDTO alunoDTO = alunoSelectService.lancaExcecaoSenaoExistirAlunoPorID(id);
+        assertEquals(alunoDTO.getId(), id);
+    }
 
     private List<AlunoDTO> gerarListaAlunosDTO() {
         List<AlunoDTO> alunos = new ArrayList<>();

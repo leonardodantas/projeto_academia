@@ -67,10 +67,7 @@ public class AvaliacaoInsertService {
     }
 
     private void verificarSeExisteAlunoComCPF(AvaliacaoDTO avaliacaoDTO){
-        AlunoDTO alunoDTO = alunoSelectService.recuperarAlunoPorId(avaliacaoDTO.getIdAluno());
-        if (Strings.isNullOrEmpty(alunoDTO.getId())) {
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Aluno não existe na base de dados");
-        }
+        AlunoDTO alunoDTO = alunoSelectService.lancaExcecaoSenaoExistirAlunoPorID(avaliacaoDTO.getIdAluno());;
         AlunoDTO alunoComCPF = alunoSelectService.recuperaAlunoPorCPF(alunoDTO.getCpf());
         if (Strings.isNullOrEmpty(alunoComCPF.getId())) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "CPF não existe na base de dados");

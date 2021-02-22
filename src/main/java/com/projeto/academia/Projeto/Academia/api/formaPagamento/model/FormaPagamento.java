@@ -18,7 +18,6 @@ public class FormaPagamento extends Entity {
     @Column(name = "tipo_plano_pagamento")
     private TipoPlanoPagamento tipoPlanoPagamento;
 
-
     @Column(name = "porcentagem_desconto")
     private double porcentagemDesconto;
 

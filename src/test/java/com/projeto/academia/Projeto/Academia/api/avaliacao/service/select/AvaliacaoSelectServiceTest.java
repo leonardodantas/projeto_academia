@@ -1,6 +1,5 @@
 package com.projeto.academia.Projeto.Academia.api.avaliacao.service.select;
 
-import com.projeto.academia.Projeto.Academia.api.aluno.model.dto.AlunoDTO;
 import com.projeto.academia.Projeto.Academia.api.avaliacao.model.Avaliacao;
 import com.projeto.academia.Projeto.Academia.api.avaliacao.model.assembler.AvaliacaoAssembler;
 import com.projeto.academia.Projeto.Academia.api.avaliacao.model.dto.AvaliacaoDTO;

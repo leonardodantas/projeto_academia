@@ -11,11 +11,7 @@ import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
-import org.mockito.stubbing.OngoingStubbing;
-
 import java.util.Arrays;
-
-import static org.mockito.Mockito.doCallRealMethod;
 import static org.mockito.Mockito.when;
 
 @RunWith(MockitoJUnitRunner.class)
@@ -68,6 +64,7 @@ public class AvaliacaoDeleteServiceTest {
     @Test
     public void deveRemoverTodasAsAvaliacoesDeAluno(){
         String idAAluno = "123";
+        when(alunoSelectService.lancaExcecaoSenaoExistirAlunoPorID(idAAluno)).thenReturn(this.alunoDTO);
         avaliacaoDeleteService.removerTodasAsAvaliacoesDoAluno(idAAluno);
     }
 

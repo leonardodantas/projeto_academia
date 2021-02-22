@@ -57,7 +57,7 @@ public class AvaliacaoInsertServiceTest {
                 .idAluno(idAluno)
                 .build();
 
-        when(alunoSelectService.recuperarAlunoPorId(avaliacaoDTO.getIdAluno())).thenReturn(alunoDTO);
+        when(alunoSelectService.lancaExcecaoSenaoExistirAlunoPorID(avaliacaoDTO.getIdAluno())).thenReturn(alunoDTO);
         when(alunoSelectService.recuperaAlunoPorCPF(alunoDTO.getCpf())).thenReturn(alunoDTO);
         when(avaliacaoAssembler.dtoParaEntidade(avaliacaoDTO)).thenReturn(avaliacao);
         when(iAvaliacaoRepository.save(avaliacao)).thenReturn(avaliacao);
@@ -84,7 +84,7 @@ public class AvaliacaoInsertServiceTest {
         AvaliacaoDTO avaliacao = AvaliacaoDTO.builder()
                 .idAluno("123")
                 .build();
-        when(alunoSelectService.recuperarAlunoPorId(idAlunoInexistente)).thenReturn(AlunoDTO.builder().build());
+        when(alunoSelectService.lancaExcecaoSenaoExistirAlunoPorID(idAlunoInexistente)).thenReturn(AlunoDTO.builder().build());
         avaliacaoInsertService.criarAvaliacao(avaliacao);
     }
 
@@ -95,7 +95,7 @@ public class AvaliacaoInsertServiceTest {
         AvaliacaoDTO avaliacao = AvaliacaoDTO.builder()
                 .idAluno("123")
                 .build();
-        when(alunoSelectService.recuperarAlunoPorId(idAlunoInexistente)).thenReturn(AlunoDTO.builder().id("123").cpf(cpfInexistente).build());
+        when(alunoSelectService.lancaExcecaoSenaoExistirAlunoPorID(idAlunoInexistente)).thenReturn(AlunoDTO.builder().id("123").cpf(cpfInexistente).build());
         when(alunoSelectService.recuperaAlunoPorCPF(cpfInexistente)).thenReturn(AlunoDTO.builder().build());
 
         avaliacaoInsertService.criarAvaliacao(avaliacao);
@@ -112,7 +112,7 @@ public class AvaliacaoInsertServiceTest {
 
 
         when(avaliacaoSelectService.recuperarAvaliacaoPeloID(avaliacaoDTO.getId())).thenReturn(avaliacaoDTO);
-        when(alunoSelectService.recuperarAlunoPorId(avaliacaoDTO.getIdAluno())).thenReturn(alunoDTO);
+        when(alunoSelectService.lancaExcecaoSenaoExistirAlunoPorID(avaliacaoDTO.getIdAluno())).thenReturn(alunoDTO);
         when(alunoSelectService.recuperaAlunoPorCPF(alunoDTO.getCpf())).thenReturn(alunoDTO);
         when(avaliacaoAssembler.dtoParaEntidade(avaliacaoDTO)).thenReturn(avaliacao);
         when(iAvaliacaoRepository.save(avaliacao)).thenReturn(avaliacao);

@@ -44,10 +44,7 @@ public class AvalicaoDeleteService {
 
     public AlunoDTO removerTodasAsAvaliacoesDoAluno(String idAluno){
 
-        AlunoDTO alunoDTO = alunoSelectService.recuperarAlunoETodasAsAvalicoes(idAluno);
-        if (Strings.isNullOrEmpty(alunoDTO.getId())) {
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Id não existe na base de dados de alunos");
-        }
+        AlunoDTO alunoDTO = alunoSelectService.lancaExcecaoSenaoExistirAlunoPorID(idAluno);
 
         if (Objects.isNull(alunoDTO.getAvaliacoes())){
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Aluno não possui nenhuma avaliação");
