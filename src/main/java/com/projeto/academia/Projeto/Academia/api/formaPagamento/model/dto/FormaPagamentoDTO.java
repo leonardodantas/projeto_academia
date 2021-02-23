@@ -1,6 +1,6 @@
 package com.projeto.academia.Projeto.Academia.api.formaPagamento.model.dto;
 
-import com.projeto.academia.Projeto.Academia.api.formaPagamento.model.TipoPlanoPagamento;
+import com.projeto.academia.Projeto.Academia.api.formaPagamento.tipoPlanoPagamento.TipoPlanoPagamento;
 import com.projeto.academia.Projeto.Academia.utils.model.dto.DataTransferObject;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.AllArgsConstructor;

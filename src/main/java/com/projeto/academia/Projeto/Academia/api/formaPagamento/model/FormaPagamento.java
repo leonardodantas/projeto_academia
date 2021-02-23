@@ -1,5 +1,6 @@
 package com.projeto.academia.Projeto.Academia.api.formaPagamento.model;
 
+import com.projeto.academia.Projeto.Academia.api.formaPagamento.tipoPlanoPagamento.TipoPlanoPagamento;
 import com.projeto.academia.Projeto.Academia.utils.model.Entity;
 import lombok.Builder;
 import lombok.Getter;
@@ -12,7 +13,7 @@ import javax.persistence.Id;
 @Builder
 @Getter
 
-@javax.persistence.Entity
+@javax.persistence.Entity(name = "FORMA_PAGAMENTO")
 public class FormaPagamento extends Entity {
 
     @Id

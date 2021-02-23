@@ -1,8 +1,8 @@
-package com.projeto.academia.Projeto.Academia.api.formaPagamento.model;
+package com.projeto.academia.Projeto.Academia.api.formaPagamento.tipoPlanoPagamento;
 
 public enum TipoPlanoPagamento {
 
-    MENSAL("MENSAL"), TRIMESTRAL("TRIMESTRAL"), SEMESTRAL("SEMESTRAL"), ANUAL("ANUAL");
+    MENSAL("MENSAL"), SEMESTRAL("SEMESTRAL"), ANUAL("ANUAL");
 
     private String tipoPlanoPagamento;
 
@@ -13,4 +13,7 @@ public enum TipoPlanoPagamento {
     public String getTipoPlanoPagamento(){
         return this.tipoPlanoPagamento;
     }
+
 }
+
+

@@ -8,7 +8,9 @@ import com.projeto.academia.Projeto.Academia.api.formaPagamento.model.dto.FormaP
 import com.projeto.academia.Projeto.Academia.utils.model.assembler.AbstractAssemblerDTO;
 import lombok.NonNull;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
+@Component
 public class CadastroAssembler extends AbstractAssemblerDTO<Cadastro, CadastroDTO> {
 
     @Autowired

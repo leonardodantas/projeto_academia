@@ -4,11 +4,14 @@ import com.projeto.academia.Projeto.Academia.api.formaPagamento.model.FormaPagam
 import com.projeto.academia.Projeto.Academia.api.formaPagamento.model.dto.FormaPagamentoDTO;
 import com.projeto.academia.Projeto.Academia.utils.model.assembler.AbstractAssemblerDTO;
 import lombok.NonNull;
+import org.springframework.stereotype.Component;
 
+@Component
 public class FormaPagamentoAssembler extends AbstractAssemblerDTO<FormaPagamento, FormaPagamentoDTO> {
 
     @Override
     public FormaPagamentoDTO entidadeParaDTO(@NonNull FormaPagamento formaPagamento) {
+
         return FormaPagamentoDTO.builder()
                 .id(formaPagamento.getId())
                 .tipoPlanoPagamento(formaPagamento.getTipoPlanoPagamento())
