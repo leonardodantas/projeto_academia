@@ -2,6 +2,7 @@ package com.projeto.academia.Projeto.Academia.api.cadastro.model.dto;
 
 import com.projeto.academia.Projeto.Academia.api.formaPagamento.model.FormaPagamento;
 import com.projeto.academia.Projeto.Academia.api.formaPagamento.model.dto.FormaPagamentoDTO;
+import com.projeto.academia.Projeto.Academia.api.formaPagamento.tipoPlanoPagamento.TipoPlanoPagamento;
 import com.projeto.academia.Projeto.Academia.utils.model.dto.DataTransferObject;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.*;
@@ -22,4 +23,27 @@ public class CadastroDTO implements DataTransferObject {
     @ApiModelProperty(value = "Id da avaliação", name = "formaPagamento", dataType = "FormaPagamentoDTO", example = "FormaPagamentoDTO.class")
     private FormaPagamentoDTO formaPagamento;
 
+    public TipoPlanoPagamento getTipoPlanoPagamento(){
+        return this.getFormaPagamento().getTipoPlanoPagamento();
+    }
+
+    public double getPorcentagemDesconto(){
+        return this.getFormaPagamento().getPorcentagemDesconto();
+    }
+
+    public double getValorSemDesconto(){
+        return this.getFormaPagamento().getValorSemDesconto();
+    }
+
+    public void setPorcentagemDesconto(double porcentagemDesconto){
+        this.getFormaPagamento().setPorcentagemDesconto(porcentagemDesconto);
+    }
+
+    public void setValorSemDesconto(double valorSemDesconto){
+        this.getFormaPagamento().setValorSemDesconto(valorSemDesconto);
+    }
+
+    public void setValorComDesconto(double valorComDesconto){
+        this.getFormaPagamento().setValorComDesconto(valorComDesconto);
+    }
 }
