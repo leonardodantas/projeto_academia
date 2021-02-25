@@ -2,7 +2,7 @@ package com.projeto.academia.Projeto.Academia.api.cadastro.controller;
 
 import com.projeto.academia.Projeto.Academia.api.cadastro.model.Cadastro;
 import com.projeto.academia.Projeto.Academia.api.cadastro.model.dto.CadastroDTO;
-import com.projeto.academia.Projeto.Academia.api.cadastro.service.CadastroDeleteService;
+import com.projeto.academia.Projeto.Academia.api.cadastro.service.delete.CadastroDeleteService;
 import com.projeto.academia.Projeto.Academia.api.cadastro.service.insert.CadastroInsertService;
 import com.projeto.academia.Projeto.Academia.api.cadastro.service.select.CadastroSelectService;
 import com.projeto.academia.Projeto.Academia.utils.response.CollectionResponse;

@@ -3,6 +3,7 @@ package com.projeto.academia.Projeto.Academia.api.cadastro.model.dto;
 import com.projeto.academia.Projeto.Academia.api.formaPagamento.model.FormaPagamento;
 import com.projeto.academia.Projeto.Academia.api.formaPagamento.model.dto.FormaPagamentoDTO;
 import com.projeto.academia.Projeto.Academia.api.formaPagamento.tipoPlanoPagamento.TipoPlanoPagamento;
+import com.projeto.academia.Projeto.Academia.utils.geradorID.GeradorID;
 import com.projeto.academia.Projeto.Academia.utils.model.dto.DataTransferObject;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.*;
@@ -45,5 +46,10 @@ public class CadastroDTO implements DataTransferObject {
 
     public void setValorComDesconto(double valorComDesconto){
         this.getFormaPagamento().setValorComDesconto(valorComDesconto);
+    }
+
+    public void gerarIdCadastroEIdFormaPagamento() {
+        this.id = GeradorID.getInstance().gerarCodigo();
+        this.getFormaPagamento().setId(GeradorID.getInstance().gerarCodigo());
     }
 }

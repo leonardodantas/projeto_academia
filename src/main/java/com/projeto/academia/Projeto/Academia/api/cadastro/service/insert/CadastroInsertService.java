@@ -1,6 +1,5 @@
 package com.projeto.academia.Projeto.Academia.api.cadastro.service.insert;
 
-import com.google.common.base.Strings;
 import com.projeto.academia.Projeto.Academia.api.aluno.service.select.AlunoSelectService;
 import com.projeto.academia.Projeto.Academia.api.cadastro.model.Cadastro;
 import com.projeto.academia.Projeto.Academia.api.cadastro.model.assembler.CadastroAssembler;
@@ -8,11 +7,8 @@ import com.projeto.academia.Projeto.Academia.api.cadastro.model.dto.CadastroDTO;
 import com.projeto.academia.Projeto.Academia.api.cadastro.repository.ICadastroRepository;
 import com.projeto.academia.Projeto.Academia.api.cadastro.service.select.CadastroSelectService;
 import com.projeto.academia.Projeto.Academia.api.formaPagamento.tipoPlanoPagamento.CalculadoraPagamento;
-import com.projeto.academia.Projeto.Academia.utils.geradorID.GeradorID;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
-import org.springframework.web.server.ResponseStatusException;
 
 @Service
 public class CadastroInsertService {
@@ -34,8 +30,8 @@ public class CadastroInsertService {
 
     public CadastroDTO criarCadastro(CadastroDTO cadastroDTO) {
         alunoSelectService.lancaExcecaoSenaoExistirAlunoPorID(cadastroDTO.getIdAluno());
-        cadastroDTO.setId(GeradorID.getInstance().gerarCodigo());
-        this.defineValoresDoCadastro(cadastroDTO);
+        cadastroDTO.gerarIdCadastroEIdFormaPagamento();
+        cadastroDTO = this.defineValoresDoCadastro(cadastroDTO);
         Cadastro cadastro = cadastroAssembler.dtoParaEntidade(cadastroDTO);
         CadastroDTO cadastroSalvo = this.salvarNoBanco(cadastro);
         return cadastroSalvo;
@@ -52,13 +48,14 @@ public class CadastroInsertService {
         return cadastroDTO;
     }
 
-    private void defineValoresDoCadastro(CadastroDTO cadastroDTO){
-        calculadoraPagamento.calcularValorPagamento(cadastroDTO);
-        calculadoraPagamento.calcularPorcentagem(cadastroDTO);
+    private CadastroDTO defineValoresDoCadastro(CadastroDTO cadastroDTO){
+        cadastroDTO.setValorSemDesconto(calculadoraPagamento.calcularValorPagamento(cadastroDTO.getTipoPlanoPagamento()));
+        cadastroDTO.setValorComDesconto(calculadoraPagamento.calcularValorComDesconto(cadastroDTO));
+        return  cadastroDTO;
     }
 
     public CadastroDTO atualizarPorcentagemCadastro(String idCadastro, double novaPorcentagem) {
-        CadastroDTO cadastroDTO = cadastroSelectService.retornarUsuarioOuLancaExcecao(idCadastro);
+        CadastroDTO cadastroDTO = cadastroSelectService.retornarCadastroOuLancaExcecao(idCadastro);
         if (novaPorcentagem > 0 && novaPorcentagem < 100) {
             cadastroDTO.setPorcentagemDesconto(novaPorcentagem);
         }

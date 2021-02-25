@@ -11,24 +11,25 @@ public class CalculadoraPagamento {
     @Autowired
     private ValoresPagamentoService valoresPagamentoService;
 
-    public void calcularValorPagamento(CadastroDTO cadastroDTO){
-         double valorSemDesconto = valoresPagamentoService.recuperarValorPagamento(cadastroDTO.getTipoPlanoPagamento());
-        cadastroDTO.setValorSemDesconto(valorSemDesconto);
+    public double calcularValorPagamento(TipoPlanoPagamento tipoPlanoPagamento){
+        double valorSemDesconto = valoresPagamentoService.recuperarValorPagamento(tipoPlanoPagamento);
+        return valorSemDesconto;
     }
 
-    public void calcularPorcentagem(CadastroDTO cadastroDTO) {
-
+    public double calcularValorComDesconto(CadastroDTO cadastroDTO) {
+        double valorComDesconto = 0.0;
         String valorParaPorcentagem = String.valueOf(cadastroDTO.getPorcentagemDesconto());
         double valorPorcentagem = cadastroDTO.getPorcentagemDesconto();
 
         if (!valorParaPorcentagem.isEmpty()) {
-
             if (valorPorcentagem > 0.0 && valorPorcentagem < 100) {
-                cadastroDTO.setValorComDesconto(cadastroDTO.getValorSemDesconto() - cadastroDTO.getValorSemDesconto() * (cadastroDTO.getPorcentagemDesconto() / 100));
+                valorComDesconto = cadastroDTO.getValorSemDesconto() - cadastroDTO.getValorSemDesconto() * (cadastroDTO.getPorcentagemDesconto() / 100);
             } else {
-                cadastroDTO.setValorComDesconto(cadastroDTO.getValorSemDesconto());
+                valorComDesconto = cadastroDTO.getValorSemDesconto();
             }
+            cadastroDTO.setValorComDesconto(valorComDesconto);
 
         }
+        return valorComDesconto;
     }
 }

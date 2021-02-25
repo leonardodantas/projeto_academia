@@ -30,7 +30,7 @@ public class CadastroSelectService {
         return cadastroDTO;
     }
 
-    public CadastroDTO retornarUsuarioOuLancaExcecao(String idCadastro){
+    public CadastroDTO retornarCadastroOuLancaExcecao(String idCadastro){
         CadastroDTO cadastroDTO = this.recuperarCadastroPeloID(idCadastro);
         if (Strings.isNullOrEmpty(cadastroDTO.getId())) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Cadastro não existe na base de dados");

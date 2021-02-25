@@ -13,6 +13,7 @@ import javax.validation.constraints.NotNull;
 @NoArgsConstructor
 public class FormaPagamentoDTO implements DataTransferObject {
 
+    @Setter
     @ApiModelProperty(value = "Id da Forma de Pagamento", name = "id", dataType = "String", example = "ahnb594aa41fd98q5")
     private String id;
 

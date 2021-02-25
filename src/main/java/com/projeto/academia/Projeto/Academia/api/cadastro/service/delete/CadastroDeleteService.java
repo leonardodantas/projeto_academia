@@ -1,4 +1,4 @@
-package com.projeto.academia.Projeto.Academia.api.cadastro.service;
+package com.projeto.academia.Projeto.Academia.api.cadastro.service.delete;
 
 import com.projeto.academia.Projeto.Academia.api.cadastro.model.dto.CadastroDTO;
 import com.projeto.academia.Projeto.Academia.api.cadastro.repository.ICadastroRepository;
@@ -16,7 +16,7 @@ public class CadastroDeleteService {
     private CadastroSelectService cadastroSelectService;
 
     public CadastroDTO deletarCadastroPeloID(String id){
-        CadastroDTO cadastroDTO = cadastroSelectService.retornarUsuarioOuLancaExcecao(id);
+        CadastroDTO cadastroDTO = cadastroSelectService.retornarCadastroOuLancaExcecao(id);
         this.deletarCadastroNaBaseDeDados(id);
         return cadastroDTO;
     }
