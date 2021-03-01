@@ -1,5 +1,6 @@
 package com.projeto.academia.Projeto.Academia.api.cadastro.controller;
 
+import com.google.common.base.Strings;
 import com.projeto.academia.Projeto.Academia.api.cadastro.model.Cadastro;
 import com.projeto.academia.Projeto.Academia.api.cadastro.model.dto.CadastroDTO;
 import com.projeto.academia.Projeto.Academia.api.cadastro.service.delete.CadastroDeleteService;
@@ -58,6 +59,9 @@ public class CadastroController {
     @ApiOperation(value = "Recuperar cadastro pelo ID")
     public ResponseEntity<?> recuperarCadastroPeloID(@PathVariable("id") String id){
         CadastroDTO cadastroDTO = cadastroSelectService.recuperarCadastroPeloID(id);
+        if (Strings.isNullOrEmpty(cadastroDTO.getId())){
+            return ResponseEntity.noContent().build();
+        }
         return ResponseEntity.ok(cadastroDTO);
     }
 

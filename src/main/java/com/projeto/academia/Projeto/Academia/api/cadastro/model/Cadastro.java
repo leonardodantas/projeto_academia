@@ -2,10 +2,7 @@ package com.projeto.academia.Projeto.Academia.api.cadastro.model;
 
 import com.projeto.academia.Projeto.Academia.api.formaPagamento.model.FormaPagamento;
 import com.projeto.academia.Projeto.Academia.utils.model.Entity;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.persistence.Column;
 import javax.persistence.Id;
@@ -28,6 +25,8 @@ public class Cadastro extends Entity {
     private String idAluno;
 
     @OneToOne
+    @Getter
+    @Setter
     @JoinColumn(name = "id_forma_pagamento")
     private FormaPagamento formaPagamento;
 }

@@ -6,6 +6,8 @@ import com.projeto.academia.Projeto.Academia.api.cadastro.model.assembler.Cadast
 import com.projeto.academia.Projeto.Academia.api.cadastro.model.dto.CadastroDTO;
 import com.projeto.academia.Projeto.Academia.api.cadastro.repository.ICadastroRepository;
 import com.projeto.academia.Projeto.Academia.api.cadastro.service.select.CadastroSelectService;
+import com.projeto.academia.Projeto.Academia.api.formaPagamento.model.FormaPagamento;
+import com.projeto.academia.Projeto.Academia.api.formaPagamento.service.FormaPagamentoService;
 import com.projeto.academia.Projeto.Academia.api.formaPagamento.tipoPlanoPagamento.CalculadoraPagamento;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -28,6 +30,9 @@ public class CadastroInsertService {
     @Autowired
     private CadastroSelectService cadastroSelectService;
 
+    @Autowired
+    private FormaPagamentoService formaPagamentoService;
+
     public CadastroDTO criarCadastro(CadastroDTO cadastroDTO) {
         alunoSelectService.lancaExcecaoSenaoExistirAlunoPorID(cadastroDTO.getIdAluno());
         cadastroDTO.gerarIdCadastroEIdFormaPagamento();
@@ -40,7 +45,9 @@ public class CadastroInsertService {
     private CadastroDTO salvarNoBanco(Cadastro cadastro){
         CadastroDTO cadastroDTO = new CadastroDTO();
         try {
+            FormaPagamento formaPagamento = formaPagamentoService.salvarFormaPagamento(cadastro.getFormaPagamento());
             Cadastro cadastroSalvo = iCadastroRepository.save(cadastro);
+            cadastroSalvo.setFormaPagamento(formaPagamento);
             cadastroDTO = cadastroAssembler.entidadeParaDTO(cadastroSalvo);
         } catch (Exception e){
             throw new RuntimeException(e);

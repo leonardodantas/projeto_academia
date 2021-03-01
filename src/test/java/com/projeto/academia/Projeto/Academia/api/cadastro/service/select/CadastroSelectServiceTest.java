@@ -4,19 +4,27 @@ import com.projeto.academia.Projeto.Academia.api.cadastro.model.Cadastro;
 import com.projeto.academia.Projeto.Academia.api.cadastro.model.assembler.CadastroAssembler;
 import com.projeto.academia.Projeto.Academia.api.cadastro.model.dto.CadastroDTO;
 import com.projeto.academia.Projeto.Academia.api.cadastro.repository.ICadastroRepository;
+import com.projeto.academia.Projeto.Academia.utils.response.CollectionResponse;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
+import org.mockito.Matchers;
 import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.Pageable;
 import org.springframework.web.server.ResponseStatusException;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.mockito.Mockito.when;
 
 @RunWith(MockitoJUnitRunner.class)
@@ -34,6 +42,9 @@ public class CadastroSelectServiceTest {
     @Rule
     public ExpectedException exceptionRule = ExpectedException.none();
 
+    @Mock
+    private Pageable pageable;
+
     private Cadastro cadastro;
 
     private CadastroDTO cadastroDTO;
@@ -50,7 +61,6 @@ public class CadastroSelectServiceTest {
                 .id(idCadastro)
                 .build();
         when(cadastroAssembler.entidadeParaDTO(cadastro)).thenReturn(cadastroDTO);
-        when(cadastroAssembler.dtoParaEntidade(cadastroDTO)).thenReturn(cadastro);
         when(iCadastroRepository.findById(idCadastro)).thenReturn(Optional.of(cadastro));
 
         Cadastro cadastroInexistente = Cadastro.builder().build();
@@ -58,7 +68,6 @@ public class CadastroSelectServiceTest {
 
         when(iCadastroRepository.findById(idCadastroInexistente)).thenReturn(Optional.of(cadastroInexistente));
         when(cadastroAssembler.entidadeParaDTO(cadastroInexistente)).thenReturn(cadastroDTOInexistete);
-        when(cadastroAssembler.dtoParaEntidade(cadastroDTOInexistete)).thenReturn(cadastroInexistente);
 
     }
 
@@ -83,4 +92,36 @@ public class CadastroSelectServiceTest {
         cadastroSelectService.retornarCadastroOuLancaExcecao(idCadastro);
     }
 
+    @Test
+    public void deveRecuperarTodos(){
+        Page<Cadastro> cadastroPage = this.criarPage();
+        List<CadastroDTO> cadastroDTO = this.criarListaCadastroDTO();
+        when(iCadastroRepository.findAll(Matchers.isA(Pageable.class))).thenReturn(cadastroPage);
+        when(cadastroAssembler.muitasEntidadesParaMuitosDTOs(cadastroPage.getContent())).thenReturn(cadastroDTO);
+        CollectionResponse<CadastroDTO, Cadastro> response = cadastroSelectService.recuperarTodos(pageable);
+        assertEquals(response.getSize(), 10);
+        assertNotNull(response);
+    }
+
+    private List<CadastroDTO> criarListaCadastroDTO() {
+        List<CadastroDTO> cadastroDTOList = new ArrayList<>();
+        for(int i=0; i<10; i++){
+            CadastroDTO cadastroDTO = CadastroDTO.builder()
+                    .id(String.valueOf(i + 1))
+                    .build();
+            cadastroDTOList.add(cadastroDTO);
+        }
+        return cadastroDTOList;
+    }
+
+    private Page<Cadastro> criarPage() {
+        List<Cadastro> cadastros = new ArrayList<>();
+        for (int i=0; i< 10; i++){
+            Cadastro cadastro = Cadastro.builder()
+                    .id(String.valueOf(i + 1))
+                    .build();
+            cadastros.add(cadastro);
+        }
+        return new PageImpl<>(cadastros);
+    }
 }
