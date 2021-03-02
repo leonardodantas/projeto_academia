@@ -1,9 +1,6 @@
 package com.projeto.academia.Projeto.Academia.api.usuario.model;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 import org.springframework.security.core.GrantedAuthority;
 
 import javax.persistence.*;
@@ -12,6 +9,7 @@ import javax.persistence.*;
 @NoArgsConstructor
 @Getter
 @Setter
+@Builder
 @Table(name = "perfil")
 @Entity
 public class Perfil implements GrantedAuthority {

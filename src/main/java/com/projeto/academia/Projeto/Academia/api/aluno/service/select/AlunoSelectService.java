@@ -40,13 +40,24 @@ public class AlunoSelectService {
     public AlunoDTO recuperaAlunoPorCPF(String cpf){
         String cpfFormatado = new ValidarCPF().formatarCPF(cpf);
         Optional<Aluno> aluno = recuperaAlunoPorCPFNoBanco(cpfFormatado);
-        AlunoDTO alunoDTO = this.verificaEConverteAlunoRecoperado(aluno);
+        AlunoDTO alunoDTO = this.verificaEConverteAlunoRecuperado(aluno);
+        return  alunoDTO;
+    }
+
+
+    public AlunoDTO recuperaAlunoPorCPFOuLancaExcecao(String cpf){
+        String cpfFormatado = new ValidarCPF().formatarCPF(cpf);
+        Optional<Aluno> aluno = recuperaAlunoPorCPFNoBanco(cpfFormatado);
+        if (!aluno.isPresent()) {
+            throw new ResponseStatusException(HttpStatus.CONFLICT, "CPF não existe na base de dados");
+        }
+        AlunoDTO alunoDTO = this.verificaEConverteAlunoRecuperado(aluno);
         return  alunoDTO;
     }
 
     public AlunoDTO recuperarAlunoPorId(String id){
         Optional<Aluno> aluno = recuperarAlunoPorIDNoBanco(id);
-        AlunoDTO alunoDTO = this.verificaEConverteAlunoRecoperado(aluno);
+        AlunoDTO alunoDTO = this.verificaEConverteAlunoRecuperado(aluno);
         return  alunoDTO;
     }
 
@@ -55,7 +66,7 @@ public class AlunoSelectService {
         if (!aluno.isPresent()) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Aluno não existe na base de dados");
         }
-        AlunoDTO alunoDTO = this.verificaEConverteAlunoRecoperado(aluno);
+        AlunoDTO alunoDTO = this.verificaEConverteAlunoRecuperado(aluno);
         return  alunoDTO;
     }
 
@@ -69,7 +80,7 @@ public class AlunoSelectService {
         return alunoDTO;
     }
 
-    private AlunoDTO verificaEConverteAlunoRecoperado(Optional<Aluno> aluno){
+    private AlunoDTO verificaEConverteAlunoRecuperado(Optional<Aluno> aluno){
         AlunoDTO alunoDTO = new AlunoDTO();
         if(aluno.isPresent()) {
             alunoDTO = alunoAssembler.entidadeParaDTO(aluno.get());

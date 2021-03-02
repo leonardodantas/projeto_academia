@@ -2,7 +2,7 @@ package com.projeto.academia.Projeto.Academia.api.formaPagamento.tipoPlanoPagame
 
 public enum TipoPlanoPagamento {
 
-    MENSAL("MENSAL"), SEMESTRAL("SEMESTRAL"), ANUAL("ANUAL");
+    MENSAL("MENSAL"), TRIMESTRAL("TRIMESTRAL"), SEMESTRAL("SEMESTRAL"), ANUAL("ANUAL");
 
     private String tipoPlanoPagamento;
 

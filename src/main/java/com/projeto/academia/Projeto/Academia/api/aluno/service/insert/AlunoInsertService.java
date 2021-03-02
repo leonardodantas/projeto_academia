@@ -26,14 +26,7 @@ public class AlunoInsertService {
     private AlunoSelectService alunoSelectService;
 
     public AlunoDTO inserirAluno(AlunoDTO alunoDTO) {
-
-        AlunoDTO alunoComCPFRepetido = alunoSelectService.recuperaAlunoPorCPF(alunoDTO.getCpf());
-
-        if (!Strings.isNullOrEmpty(alunoComCPFRepetido.getId())){
-            throw new ResponseStatusException(
-                    HttpStatus.BAD_REQUEST, "CPF já existe na base de dados");
-        }
-
+        alunoSelectService.recuperaAlunoPorCPFOuLancaExcecao(alunoDTO.getCpf());
         alunoDTO.setId(GeradorID.getInstance().gerarCodigo());
         Aluno aluno = alunoAssembler.dtoParaEntidade(alunoDTO);
         AlunoDTO alunoSalvo = this.inserirAlunoNoBanco(aluno);

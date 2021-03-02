@@ -19,12 +19,12 @@ import java.util.List;
 public class Usuario implements UserDetails {
 
     @Id
-    private Long id;
+    private String id;
     private String nome;
     private String senha;
     private String email;
 
-    @ManyToMany(fetch = FetchType.EAGER)
+    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private List<Perfil> perfis = new ArrayList<>();
 
     @Override
