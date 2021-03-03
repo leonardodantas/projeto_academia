@@ -35,14 +35,14 @@ public class AvaliacaoController {
 
     @PostMapping
     @ApiOperation(value = "Criação de uma nova avaliação")
-    public ResponseEntity<?> criarAvaliacao(@Valid @RequestBody AvaliacaoDTO avaliacaoDTO){
+    public ResponseEntity<?> criarAvaliacao(@Valid @RequestBody AvaliacaoDTO avaliacaoDTO, @RequestHeader(value = "Authorization") String authorization){
         AvaliacaoDTO dto = avaliacaoInsertService.criarAvaliacao(avaliacaoDTO);
         return ResponseEntity.ok(dto);
     }
 
     @PutMapping
     @ApiOperation(value = "Atualização de uma avaliação")
-    public ResponseEntity<?> atualizarAvaliacao(@Valid @RequestBody AvaliacaoDTO avaliacaoDTO){
+    public ResponseEntity<?> atualizarAvaliacao(@Valid @RequestBody AvaliacaoDTO avaliacaoDTO, @RequestHeader(value = "Authorization") String authorization){
         AvaliacaoDTO dto = avaliacaoInsertService.atualizarAvaliacao(avaliacaoDTO);
         return ResponseEntity.ok(dto);
     }
@@ -50,7 +50,7 @@ public class AvaliacaoController {
     @DeleteMapping("/{idAvaliacao}")
     @Transactional
     @ApiOperation(value = "Remove uma avaliação a partir do ID da avaliação")
-    public ResponseEntity<?> removerAvaliacao(@PathVariable String idAvaliacao){
+    public ResponseEntity<?> removerAvaliacao(@PathVariable String idAvaliacao, @RequestHeader(value = "Authorization") String authorization){
         AvaliacaoDTO dto = avalicaoDeleteService.removerAvaliacao(idAvaliacao);
         return ResponseEntity.ok(dto);
     }
@@ -58,35 +58,35 @@ public class AvaliacaoController {
     @DeleteMapping("/aluno/{idAluno}")
     @Transactional
     @ApiOperation(value = "Remove todas as avaliações de uma aluno a partir do ID do aluno")
-    public ResponseEntity<?> removerTodasAvalicoesDoAluno(@PathVariable String idAluno){
+    public ResponseEntity<?> removerTodasAvalicoesDoAluno(@PathVariable String idAluno, @RequestHeader(value = "Authorization") String authorization){
         AlunoDTO dto = avalicaoDeleteService.removerTodasAsAvaliacoesDoAluno(idAluno);
         return ResponseEntity.ok(dto);
     }
 
     @GetMapping
     @ApiOperation(value = "Recupera todas as avaliações")
-    public ResponseEntity<?> recuperarTodos(@PageableDefault(page = 0,size = 20) Pageable pageable){
+    public ResponseEntity<?> recuperarTodos(@PageableDefault(page = 0,size = 20) Pageable pageable, @RequestHeader(value = "Authorization") String authorization){
         CollectionResponse<AvaliacaoDTO, Avaliacao> response = avaliacaoSelectService.recuperarTodos(pageable);
         return ResponseEntity.ok(response);
     }
 
     @GetMapping("/{idAluno}")
     @ApiOperation(value = "Recupera todas as avaliações de determinado aluno pelo seu ID")
-    public ResponseEntity<?> recuperarTodasAvalicoesDeAluno(@PageableDefault(page = 0,size = 20) Pageable pageable, @PathVariable String idAluno){
+    public ResponseEntity<?> recuperarTodasAvalicoesDeAluno(@PageableDefault(page = 0,size = 20) Pageable pageable, @PathVariable String idAluno, @RequestHeader(value = "Authorization") String authorization){
         CollectionResponse<AvaliacaoDTO, Avaliacao> response = avaliacaoSelectService.recuperarTodasAvaliacoesDeAluno(idAluno,pageable);
         return ResponseEntity.ok(response);
     }
 
     @GetMapping("/ultimaAvaliacao/{idAluno}")
     @ApiOperation(value = "Recupera ultima avaliação do aluno de acordo com o atributo Data de Avaliação")
-    public ResponseEntity<?> recuperarUltimaAvaliacaoDeAlunoPelaData(@PathVariable String idAluno){
+    public ResponseEntity<?> recuperarUltimaAvaliacaoDeAlunoPelaData(@PathVariable String idAluno, @RequestHeader(value = "Authorization") String authorization){
         AvaliacaoDTO avaliacaoDTO = avaliacaoSelectService.recuperarUltimaAvaliacaoDoAluno(idAluno);
         return ResponseEntity.ok(avaliacaoDTO);
     }
 
     @GetMapping("/ultimaAvaliacao/atualizada/{idAluno}")
     @ApiOperation(value = "Recupera ultima avaliação do aluno de acordo com o atributo Data de atualização da Avaliação")
-    public ResponseEntity<?> recuperarUltimaAvaliacaoDeAlunoPelaDataAtualizada(@PathVariable String idAluno){
+    public ResponseEntity<?> recuperarUltimaAvaliacaoDeAlunoPelaDataAtualizada(@PathVariable String idAluno, @RequestHeader(value = "Authorization") String authorization){
         AvaliacaoDTO avaliacaoDTO = avaliacaoSelectService.recuperarUltimaAvaliacaoDoAlunoAtualizada(idAluno);
         return ResponseEntity.ok(avaliacaoDTO);
     }

@@ -35,7 +35,7 @@ public class CadastroController {
 
     @PostMapping
     @ApiOperation(value = "Criação de um novo cadastro")
-    public ResponseEntity<?> criarCadastro(@Valid @RequestBody CadastroDTO cadastroDTO){
+    public ResponseEntity<?> criarCadastro(@Valid @RequestBody CadastroDTO cadastroDTO, @RequestHeader(value = "Authorization") String authorization){
         CadastroDTO cadastroCriado = cadastroInsertService.criarCadastro(cadastroDTO);
         return ResponseEntity.ok(cadastroCriado);
     }
@@ -43,21 +43,21 @@ public class CadastroController {
     @PutMapping
     @ApiOperation(value = "Atualizar a porcentagem de um cadastro")
     public ResponseEntity<?> atualizarPorcentagemCadastro(@RequestParam(required = true, name = "cadastro") String idCadastro,
-                                                          @RequestParam(required = true, name = "porcentagem") double novaPorcentagem){
+                                                          @RequestParam(required = true, name = "porcentagem") double novaPorcentagem, @RequestHeader(value = "Authorization") String authorization){
         CadastroDTO cadastroDTO = cadastroInsertService.atualizarPorcentagemCadastro(idCadastro, novaPorcentagem);
         return ResponseEntity.ok(cadastroDTO);
     }
 
     @GetMapping
     @ApiOperation(value = "Recuperar todos os cadastros")
-    public ResponseEntity<?> recuperarTodosOsCadastros(@PageableDefault(page = 0, size = 20) Pageable pageable){
+    public ResponseEntity<?> recuperarTodosOsCadastros(@PageableDefault(page = 0, size = 20) Pageable pageable, @RequestHeader(value = "Authorization") String authorization){
         CollectionResponse<CadastroDTO, Cadastro> response = cadastroSelectService.recuperarTodos(pageable);
         return ResponseEntity.ok(response);
     }
 
     @GetMapping("/{id}")
     @ApiOperation(value = "Recuperar cadastro pelo ID")
-    public ResponseEntity<?> recuperarCadastroPeloID(@PathVariable("id") String id){
+    public ResponseEntity<?> recuperarCadastroPeloID(@PathVariable("id") String id, @RequestHeader(value = "Authorization") String authorization){
         CadastroDTO cadastroDTO = cadastroSelectService.recuperarCadastroPeloID(id);
         if (Strings.isNullOrEmpty(cadastroDTO.getId())){
             return ResponseEntity.noContent().build();
@@ -67,7 +67,7 @@ public class CadastroController {
 
     @DeleteMapping("/{id}")
     @Transactional
-    public ResponseEntity<?> removerCadastroPeloID(@PathVariable("id") String id){
+    public ResponseEntity<?> removerCadastroPeloID(@PathVariable("id") String id, @RequestHeader(value = "Authorization") String authorization){
         CadastroDTO cadastroDTO = cadastroDeleteService.deletarCadastroPeloID(id);
         return ResponseEntity.ok(cadastroDTO);
     }

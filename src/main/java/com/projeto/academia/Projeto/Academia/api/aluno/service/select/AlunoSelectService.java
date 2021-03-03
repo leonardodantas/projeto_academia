@@ -45,10 +45,10 @@ public class AlunoSelectService {
     }
 
 
-    public AlunoDTO recuperaAlunoPorCPFOuLancaExcecao(String cpf){
+    public AlunoDTO lancaExcecaoSeJaExistirCPFNaBaseDeDados(String cpf){
         String cpfFormatado = new ValidarCPF().formatarCPF(cpf);
         Optional<Aluno> aluno = recuperaAlunoPorCPFNoBanco(cpfFormatado);
-        if (!aluno.isPresent()) {
+        if (aluno.isPresent()) {
             throw new ResponseStatusException(HttpStatus.CONFLICT, "CPF não existe na base de dados");
         }
         AlunoDTO alunoDTO = this.verificaEConverteAlunoRecuperado(aluno);

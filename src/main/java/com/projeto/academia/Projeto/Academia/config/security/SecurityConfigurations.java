@@ -45,11 +45,12 @@ public class SecurityConfigurations extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.authorizeRequests()
+                .antMatchers("/h2").permitAll()
                 .antMatchers(HttpMethod.POST, "/usuario/create").permitAll()
                 .antMatchers(HttpMethod.POST, "/auth").permitAll()
                 .antMatchers(HttpMethod.GET, "/aluno").hasAnyRole("ADM","PERSONAL")
                 .antMatchers(HttpMethod.POST, "/aluno").hasRole("ADM")
-                .antMatchers(HttpMethod.GET, "/aluno").hasAnyRole("ADM","PERSONAL")
+                .antMatchers(HttpMethod.GET, "/aluno/*").hasAnyRole("ADM","PERSONAL")
                 .antMatchers(HttpMethod.GET, "/avaliacoes").hasAnyRole("ADM","PERSONAL")
                 .antMatchers(HttpMethod.POST, "/avaliacoes").hasRole("PERSONAL")
                 .antMatchers(HttpMethod.PUT, "/avaliacoes").hasRole("PERSONAL")
@@ -63,9 +64,6 @@ public class SecurityConfigurations extends WebSecurityConfigurerAdapter {
                 .antMatchers(HttpMethod.POST, "/cadastro").hasRole("ADM")
                 .antMatchers(HttpMethod.PUT, "/cadastro").hasRole("ADM")
                 .antMatchers(HttpMethod.DELETE, "/cadastro/*").hasRole("ADM")
-
-
-
                 .anyRequest().denyAll()
                 .and().cors().and().csrf().disable()
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
@@ -74,6 +72,6 @@ public class SecurityConfigurations extends WebSecurityConfigurerAdapter {
 
     @Override
     public void configure(WebSecurity web) throws Exception {
-        web.ignoring().antMatchers("/**.html", "/v2/api-docs", "/webjars/**", "/configuration/**", "/swagger-resources/**");
+        web.ignoring().antMatchers("/**.html", "/v2/api-docs", "/webjars/**", "/configuration/**", "/swagger-resources/**", "/h2");
     }
 }

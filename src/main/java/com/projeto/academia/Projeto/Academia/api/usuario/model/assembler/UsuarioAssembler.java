@@ -37,7 +37,7 @@ public class UsuarioAssembler extends AbstractAssemblerDTO<Usuario, UsuarioDTO> 
     private List<Perfil> getPerfils(UsuarioDTO usuarioDTO) {
         List<Perfil> perfilList = new ArrayList<>();
         Perfil perfil = Perfil.builder()
-                .nome(usuarioDTO.getPerfilUsuario().getPerfil())
+                .nome("ROLE_" + usuarioDTO.getPerfilUsuario().getPerfil())
                 .build();
 
         perfilList.add(perfil);

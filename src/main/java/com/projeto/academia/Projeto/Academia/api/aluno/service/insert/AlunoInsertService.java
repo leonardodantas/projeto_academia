@@ -1,6 +1,5 @@
 package com.projeto.academia.Projeto.Academia.api.aluno.service.insert;
 
-import com.google.common.base.Strings;
 import com.projeto.academia.Projeto.Academia.api.aluno.model.Aluno;
 import com.projeto.academia.Projeto.Academia.api.aluno.model.assembler.AlunoAssembler;
 import com.projeto.academia.Projeto.Academia.api.aluno.model.dto.AlunoDTO;
@@ -9,9 +8,7 @@ import com.projeto.academia.Projeto.Academia.api.aluno.service.select.AlunoSelec
 import com.projeto.academia.Projeto.Academia.utils.cpf.ValidarCPF;
 import com.projeto.academia.Projeto.Academia.utils.geradorID.GeradorID;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
-import org.springframework.web.server.ResponseStatusException;
 
 @Service
 public class AlunoInsertService {
@@ -26,7 +23,7 @@ public class AlunoInsertService {
     private AlunoSelectService alunoSelectService;
 
     public AlunoDTO inserirAluno(AlunoDTO alunoDTO) {
-        alunoSelectService.recuperaAlunoPorCPFOuLancaExcecao(alunoDTO.getCpf());
+        alunoSelectService.lancaExcecaoSeJaExistirCPFNaBaseDeDados(alunoDTO.getCpf());
         alunoDTO.setId(GeradorID.getInstance().gerarCodigo());
         Aluno aluno = alunoAssembler.dtoParaEntidade(alunoDTO);
         AlunoDTO alunoSalvo = this.inserirAlunoNoBanco(aluno);

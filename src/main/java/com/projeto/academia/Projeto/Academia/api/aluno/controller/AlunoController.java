@@ -29,15 +29,22 @@ public class AlunoController {
 
     @PostMapping
     @ApiOperation(value = "Cria um novo aluno")
-    public ResponseEntity<?> criarAluno(@Valid @RequestBody AlunoDTO alunoDTO){
+    public ResponseEntity<?> criarAluno(@Valid @RequestBody AlunoDTO alunoDTO, @RequestHeader(value = "Authorization") String authorization){
         AlunoDTO alunoSalvo = alunoInsertService.inserirAluno(alunoDTO);
         return ResponseEntity.ok(alunoSalvo);
     }
 
     @GetMapping
     @ApiOperation(value = "Recuperar todos os alunos com paginação")
-    public ResponseEntity<?> recuperarTodos(@PageableDefault(page = 0, size = 20) Pageable pageable){
+    public ResponseEntity<?> recuperarTodos(@PageableDefault(page = 0, size = 20) Pageable pageable, @RequestHeader(value = "Authorization") String authorization){
         CollectionResponse<AlunoDTO, Aluno> alunos = alunoSelectService.recuperarTodos(pageable);
         return ResponseEntity.ok(alunos);
+    }
+
+    @GetMapping("/{id}")
+    @ApiOperation(value = "Recuperar Aluno por ID")
+    public ResponseEntity<?> recuperarAlunoPorId(@PathVariable String id, @RequestHeader(value = "Authorization") String authorization){
+        AlunoDTO alunoDTO = alunoSelectService.recuperarAlunoPorId(id);
+        return ResponseEntity.ok(alunoDTO);
     }
 }
