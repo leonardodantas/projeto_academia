@@ -1,12 +1,14 @@
 package com.projeto.academia.Projeto.Academia.utils.model.assembler;
 
+import com.projeto.academia.Projeto.Academia.utils.model.Entity;
+import com.projeto.academia.Projeto.Academia.utils.model.dto.DataTransferObject;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
 import java.util.List;
 
 @Component
-public abstract class AbstractAssemblerDTO<entidade,dto> {
+public abstract class AbstractAssemblerDTO<entidade extends Entity,dto extends DataTransferObject> {
 
     public List<dto> muitasEntidadesParaMuitosDTOs(List<entidade> entidades){
         List<dto> dtos = new ArrayList<>();
