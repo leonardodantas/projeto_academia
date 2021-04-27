@@ -26,8 +26,7 @@ public class AlunoInsertService {
         alunoSelectService.lancaExcecaoSeJaExistirCPFNaBaseDeDados(alunoDTO.getCpf());
         alunoDTO.setId(GeradorID.gerarCodigo());
         Aluno aluno = alunoAssembler.dtoParaEntidade(alunoDTO);
-        AlunoDTO alunoSalvo = this.inserirAlunoNoBanco(aluno);
-        return alunoSalvo;
+        return this.inserirAlunoNoBanco(aluno);
     }
 
     private AlunoDTO inserirAlunoNoBanco(Aluno aluno) {
