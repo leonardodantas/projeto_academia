@@ -8,29 +8,41 @@ import java.util.UUID;
 public final class GeradorID {
 
     private static GeradorID geradorID;
-    private List<String> codigosGerados;
+    private static List<String> codigosGerados;
 
     private GeradorID(){
         this.codigosGerados = new ArrayList<>();
     }
 
-    public static GeradorID getInstance(){
+    private static GeradorID getInstance(){
         if (Objects.isNull(geradorID)){
             return new GeradorID();
         }
         return geradorID;
-
     }
-    public String gerarCodigo(){
-        UUID uuid = UUID.randomUUID();
-        String myRandom = uuid.toString();
+
+    public static String gerarCodigo(){
+        getInstance();
+
+        String uuidRandom = gerarUUID();
+        String codigo = validacaoUUID(uuidRandom);
+        codigosGerados.add(codigo);
+        return codigo;
+    }
+
+    private static String validacaoUUID(String uuidRandom) {
         String codigo = "";
         boolean codigoExistente = true;
         while (codigoExistente) {
-            codigo = myRandom.substring(0,20);
+            codigo = uuidRandom.substring(0,20);
             codigoExistente = codigosGerados.contains(codigo);
         }
-        codigosGerados.add(codigo);
         return codigo;
+    }
+
+    private static String gerarUUID() {
+        UUID uuid = UUID.randomUUID();
+        String myRandom = uuid.toString();
+        return myRandom;
     }
 }
