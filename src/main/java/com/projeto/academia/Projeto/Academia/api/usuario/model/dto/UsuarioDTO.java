@@ -34,6 +34,6 @@ public class UsuarioDTO implements DataTransferObject {
     private PerfilUsuario perfilUsuario;
 
     public void gerarID() {
-        this.id = GeradorID.getInstance().gerarCodigo();
+        this.id = GeradorID.gerarCodigo();
     }
 }

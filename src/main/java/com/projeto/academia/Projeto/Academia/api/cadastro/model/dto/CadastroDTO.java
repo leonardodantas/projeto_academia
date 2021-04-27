@@ -49,7 +49,7 @@ public class CadastroDTO implements DataTransferObject {
     }
 
     public void gerarIdCadastroEIdFormaPagamento() {
-        this.id = GeradorID.getInstance().gerarCodigo();
-        this.getFormaPagamento().setId(GeradorID.getInstance().gerarCodigo());
+        this.id = GeradorID.gerarCodigo();
+        this.getFormaPagamento().setId(GeradorID.gerarCodigo());
     }
 }

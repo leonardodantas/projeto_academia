@@ -35,7 +35,7 @@ public class AvaliacaoInsertService {
 
     public AvaliacaoDTO criarAvaliacao(AvaliacaoDTO avaliacaoDTO) {
 
-        avaliacaoDTO.setId(GeradorID.getInstance().gerarCodigo());
+        avaliacaoDTO.setId(GeradorID.gerarCodigo());
 
         if (Objects.isNull(avaliacaoDTO.getDataAvaliacao())) {
             avaliacaoDTO.setDataAvaliacao(new Date());
