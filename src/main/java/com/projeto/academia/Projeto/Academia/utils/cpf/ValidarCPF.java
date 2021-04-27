@@ -9,7 +9,7 @@ import java.util.regex.Pattern;
 
 public class ValidarCPF {
 
-    public String formatarCPF(@NonNull String cpf){
+    public static String formatarCPF(@NonNull String cpf){
         String cpfFormatado = "";
 
         if (cpf.length() != 11) {
@@ -21,7 +21,7 @@ public class ValidarCPF {
         return cpfFormatado;
     }
 
-    private String gerarCPFComFormatacao(String cpf){
+    private static String gerarCPFComFormatacao(String cpf){
         if (cpf.length() != 11) {
             throw new ResponseStatusException(
                     HttpStatus.BAD_REQUEST, "CPF com tamanho fora do padrão");
@@ -34,7 +34,7 @@ public class ValidarCPF {
         return  stringBuilder.toString();
     }
     
-    private void validarCPF(String cpf) {
+    private static void validarCPF(String cpf) {
         Pattern padrao = Pattern.compile("[0-9]{3}\\.?[0-9]{3}\\.?[0-9]{3}-?[0-9]{2}");
         Matcher matcher = padrao.matcher(cpf);
         if (!matcher.matches() || cpf.length() != 14) {
@@ -43,7 +43,7 @@ public class ValidarCPF {
         }
     }
 
-    private String recuperarApenasNumeros(String cpf) {
+    private static String recuperarApenasNumeros(String cpf) {
         return cpf.replaceAll("[\\D+]","");
     }
 

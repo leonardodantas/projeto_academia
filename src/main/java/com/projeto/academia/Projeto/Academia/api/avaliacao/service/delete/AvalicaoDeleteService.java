@@ -30,28 +30,20 @@ public class AvalicaoDeleteService {
     private AvaliacaoAssembler avaliacaoAssembler;
 
     public AvaliacaoDTO removerAvaliacao(String idAvaliacao){
-
         AvaliacaoDTO avaliacaoDTO = avaliacaoSelectService.recuperarAvaliacaoPeloID(idAvaliacao);
-
         if (Strings.isNullOrEmpty(avaliacaoDTO.getId())) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "ID para a avaliação não existe");
         }
-
         this.removerAvaliacaoNoBanco(idAvaliacao);
-
         return avaliacaoDTO;
     }
 
     public AlunoDTO removerTodasAsAvaliacoesDoAluno(String idAluno){
-
         AlunoDTO alunoDTO = alunoSelectService.lancaExcecaoSenaoExistirAlunoPorID(idAluno);
-
         if (Objects.isNull(alunoDTO.getAvaliacoes())){
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Aluno não possui nenhuma avaliação");
         }
-
         this.removerTodasAvalicoesDeAlunoNoBanco(alunoDTO.getId());
-
         return alunoDTO;
     }
 

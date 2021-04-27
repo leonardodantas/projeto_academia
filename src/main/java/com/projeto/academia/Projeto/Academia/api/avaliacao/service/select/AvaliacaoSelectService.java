@@ -25,26 +25,22 @@ public class AvaliacaoSelectService {
     public CollectionResponse<AvaliacaoDTO, Avaliacao> recuperarTodos(Pageable pageable){
         Page<Avaliacao> avaliacoesPage = this.recuperarPaginaDeAlunosDoBanco(pageable);
         List<AvaliacaoDTO> avaliacoesDTO = avaliacaoAssembler.muitasEntidadesParaMuitosDTOs(avaliacoesPage.getContent());
-        CollectionResponse<AvaliacaoDTO, Avaliacao> avaliacaoResponseDTO = new CollectionResponse<>(avaliacoesPage, avaliacoesDTO);
-        return avaliacaoResponseDTO;
+        return new CollectionResponse<>(avaliacoesPage, avaliacoesDTO);
     }
 
     public CollectionResponse<AvaliacaoDTO, Avaliacao> recuperarTodasAvaliacoesDeAluno(String idAluno, Pageable pageable){
         Page<Avaliacao> avaliacoesPage = this.recuperarTodasAvaliacoesDeAlunoDoBanco(idAluno, pageable);
         List<AvaliacaoDTO> avaliacoesDTO = avaliacaoAssembler.muitasEntidadesParaMuitosDTOs(avaliacoesPage.getContent());
-        CollectionResponse<AvaliacaoDTO, Avaliacao> avaliacaoResponseDTO = new CollectionResponse<>(avaliacoesPage, avaliacoesDTO);
-        return avaliacaoResponseDTO;
+        return new CollectionResponse<>(avaliacoesPage, avaliacoesDTO);
     }
 
     public AvaliacaoDTO recuperarAvaliacaoPeloID(String idAvaliacao){
-        AvaliacaoDTO avaliacaoDTO = this.recuperarAvaliacaoPeloIDRecuperarDoBanco(idAvaliacao);
-        return  avaliacaoDTO;
+        return this.recuperarAvaliacaoPeloIDRecuperarDoBanco(idAvaliacao);
     }
 
     public List<AvaliacaoDTO> recuperarListaDeAvaliacoesPeloIDAluno(String idUsario){
         List<Avaliacao> avaliacaoList = iAvaliacaoRepository.findAllByIdAluno(idUsario);
-        List<AvaliacaoDTO> avaliacaoDTOList = avaliacaoAssembler.muitasEntidadesParaMuitosDTOs(avaliacaoList);
-        return avaliacaoDTOList;
+        return avaliacaoAssembler.muitasEntidadesParaMuitosDTOs(avaliacaoList);
     }
 
     private AvaliacaoDTO recuperarAvaliacaoPeloIDRecuperarDoBanco(String idAvaliacao){
@@ -81,8 +77,7 @@ public class AvaliacaoSelectService {
     }
 
     public AvaliacaoDTO recuperarUltimaAvaliacaoDoAluno(String idAluno){
-        AvaliacaoDTO avaliacaoDTO = this.recuperarUltimaAvaliacaoDoAlunoNoBanco(idAluno);
-        return avaliacaoDTO;
+        return this.recuperarUltimaAvaliacaoDoAlunoNoBanco(idAluno);
     }
 
     private AvaliacaoDTO recuperarUltimaAvaliacaoDoAlunoNoBanco(String idAluno){
@@ -100,8 +95,7 @@ public class AvaliacaoSelectService {
 
 
     public AvaliacaoDTO recuperarUltimaAvaliacaoDoAlunoAtualizada(String idAluno) {
-        AvaliacaoDTO avaliacaoDTO = this.recuperarUltimaAvaliacaoAtualizadaDoAlunoNoBanco(idAluno);
-        return avaliacaoDTO;
+        return this.recuperarUltimaAvaliacaoAtualizadaDoAlunoNoBanco(idAluno);
     }
 
     private AvaliacaoDTO recuperarUltimaAvaliacaoAtualizadaDoAlunoNoBanco(String idAluno) {

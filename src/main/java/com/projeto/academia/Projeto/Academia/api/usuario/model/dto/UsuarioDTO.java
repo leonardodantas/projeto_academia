@@ -1,6 +1,7 @@
 package com.projeto.academia.Projeto.Academia.api.usuario.model.dto;
 
 import com.projeto.academia.Projeto.Academia.utils.geradorID.GeradorID;
+import com.projeto.academia.Projeto.Academia.utils.model.dto.DataTransferObject;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -15,7 +16,7 @@ import javax.validation.constraints.NotNull;
 @Getter
 @AllArgsConstructor
 @NoArgsConstructor
-public class UsuarioDTO {
+public class UsuarioDTO implements DataTransferObject {
 
     @ApiModelProperty(value = "ID do usuario", name = "id", dataType = "String", example = "456789754121dasd4", hidden = true)
     private String id;
@@ -33,6 +34,6 @@ public class UsuarioDTO {
     private PerfilUsuario perfilUsuario;
 
     public void gerarID() {
-        this.id = GeradorID.getInstance().gerarCodigo();
+        this.id = GeradorID.gerarCodigo();
     }
 }

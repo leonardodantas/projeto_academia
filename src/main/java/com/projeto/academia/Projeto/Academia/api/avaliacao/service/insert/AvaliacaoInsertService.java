@@ -34,36 +34,32 @@ public class AvaliacaoInsertService {
     private AvaliacaoSelectService avaliacaoSelectService;
 
     public AvaliacaoDTO criarAvaliacao(AvaliacaoDTO avaliacaoDTO) {
-
-        avaliacaoDTO.setId(GeradorID.getInstance().gerarCodigo());
-
+        avaliacaoDTO.setId(GeradorID.gerarCodigo());
         if (Objects.isNull(avaliacaoDTO.getDataAvaliacao())) {
             avaliacaoDTO.setDataAvaliacao(new Date());
         }
-        AvaliacaoDTO avaliacaoDTOSalva = this.preparararAvaliacaoParaSerSalvaOuAtualizada(avaliacaoDTO);
-        return avaliacaoDTOSalva;
+        return this.preparararAvaliacaoParaSerSalvaOuAtualizada(avaliacaoDTO);
     }
 
     public AvaliacaoDTO atualizarAvaliacao(AvaliacaoDTO avaliacaoDTO){
+        AvaliacaoDTO avaliacaoExiste = validarAvaliacaoParaAtualizacao(avaliacaoDTO);
+        avaliacaoDTO.setIdAluno(avaliacaoExiste.getIdAluno());
+        avaliacaoDTO.setDataAvaliacao(avaliacaoExiste.getDataAvaliacao());
+        return this.preparararAvaliacaoParaSerSalvaOuAtualizada(avaliacaoDTO);
+    }
 
+    private AvaliacaoDTO validarAvaliacaoParaAtualizacao(AvaliacaoDTO avaliacaoDTO) {
         if (Strings.isNullOrEmpty(avaliacaoDTO.getId())) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Avaliação para atualização não possui ID");
         }
-
         AvaliacaoDTO avaliacaoExiste = this.avaliacaoSelectService.recuperarAvaliacaoPeloID(avaliacaoDTO.getId());
-
         if (Strings.isNullOrEmpty(avaliacaoExiste.getId())){
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Nenhuma avaliação para ser atualizada");
         }
-
         if (Objects.isNull(avaliacaoDTO.getDataAtualizacaoAvaliacao())){
             avaliacaoDTO.setDataAtualizacaoAvaliacao(new Date());
         }
-        avaliacaoDTO.setIdAluno(avaliacaoExiste.getIdAluno());
-        avaliacaoDTO.setDataAvaliacao(avaliacaoExiste.getDataAvaliacao());
-
-        AvaliacaoDTO avaliacaoDTOSalva = this.preparararAvaliacaoParaSerSalvaOuAtualizada(avaliacaoDTO);
-        return  avaliacaoDTOSalva;
+        return avaliacaoExiste;
     }
 
     private void verificarSeExisteAlunoComCPF(AvaliacaoDTO avaliacaoDTO){
@@ -79,9 +75,7 @@ public class AvaliacaoInsertService {
         this.verificarSeExisteAlunoComCPF(avaliacaoDTO);
         this.calcularIMC(avaliacaoDTO);
         Avaliacao avaliacao = avaliacaoAssembler.dtoParaEntidade(avaliacaoDTO);
-        AvaliacaoDTO avaliacaoDTOSalva = this.salvarAvaliacaoNoBanco(avaliacao);
-
-        return avaliacaoDTOSalva;
+        return this.salvarAvaliacaoNoBanco(avaliacao);
     }
 
     private AvaliacaoDTO salvarAvaliacaoNoBanco(Avaliacao avaliacao){

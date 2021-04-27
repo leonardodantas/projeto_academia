@@ -26,8 +26,7 @@ public class CadastroSelectService {
     private CadastroAssembler cadastroAssembler;
 
     public CadastroDTO recuperarCadastroPeloID(String idCadastro){
-        CadastroDTO cadastroDTO = this.recuperarCadastroPeloIDNoBanco(idCadastro);
-        return cadastroDTO;
+        return this.recuperarCadastroPeloIDNoBanco(idCadastro);
     }
 
     public CadastroDTO retornarCadastroOuLancaExcecao(String idCadastro){
@@ -54,7 +53,6 @@ public class CadastroSelectService {
     public CollectionResponse<CadastroDTO, Cadastro> recuperarTodos(Pageable pageable) {
         Page<Cadastro> cadastroPage = iCadastroRepository.findAll(pageable);
         List<CadastroDTO> cadastroDTOList = cadastroAssembler.muitasEntidadesParaMuitosDTOs(cadastroPage.getContent());
-        CollectionResponse<CadastroDTO, Cadastro> response = new CollectionResponse<>(cadastroPage, cadastroDTOList);
-        return response;
+        return new CollectionResponse<>(cadastroPage, cadastroDTOList);
     }
 }

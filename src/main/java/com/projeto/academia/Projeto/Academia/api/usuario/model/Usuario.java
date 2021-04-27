@@ -16,7 +16,7 @@ import java.util.List;
 @NoArgsConstructor
 @Entity
 @Table(name = "usuarios")
-public class Usuario implements UserDetails {
+public class Usuario  extends com.projeto.academia.Projeto.Academia.utils.model.Entity implements UserDetails {
 
     @Id
     private String id;

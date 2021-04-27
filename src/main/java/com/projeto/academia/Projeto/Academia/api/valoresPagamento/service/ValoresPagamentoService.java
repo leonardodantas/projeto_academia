@@ -16,6 +16,7 @@ public class ValoresPagamentoService {
 
     public double recuperarValorPagamento(TipoPlanoPagamento tipoPagamento){
         Optional<ValoresPagamento> valoresPagamento = iValoresPagamentoRepository.findByTipoPlanoPagamento(tipoPagamento);
-        return valoresPagamento.get().getValor();
+        double valor = valoresPagamento.get().getValor();
+        return valor;
     }
 }

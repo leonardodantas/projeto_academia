@@ -33,32 +33,28 @@ public class AlunoSelectService {
     public CollectionResponse<AlunoDTO,Aluno> recuperarTodos(Pageable pageable) {
         Page<Aluno> alunos = recuperarListaDeAlunosDTODoBanco(pageable);
         List<AlunoDTO> alunoDTOS = alunoAssembler.muitasEntidadesParaMuitosDTOs(alunos.getContent());
-        CollectionResponse<AlunoDTO,Aluno> alunosReponseDTO = new CollectionResponse<AlunoDTO,Aluno>(alunos, alunoDTOS);
-        return alunosReponseDTO;
+        return new CollectionResponse<AlunoDTO,Aluno>(alunos, alunoDTOS);
     }
 
     public AlunoDTO recuperaAlunoPorCPF(String cpf){
-        String cpfFormatado = new ValidarCPF().formatarCPF(cpf);
+        String cpfFormatado = ValidarCPF.formatarCPF(cpf);
         Optional<Aluno> aluno = recuperaAlunoPorCPFNoBanco(cpfFormatado);
-        AlunoDTO alunoDTO = this.verificaEConverteAlunoRecuperado(aluno);
-        return  alunoDTO;
+        return this.verificaEConverteAlunoRecuperado(aluno);
     }
 
 
     public AlunoDTO lancaExcecaoSeJaExistirCPFNaBaseDeDados(String cpf){
-        String cpfFormatado = new ValidarCPF().formatarCPF(cpf);
+        String cpfFormatado = ValidarCPF.formatarCPF(cpf);
         Optional<Aluno> aluno = recuperaAlunoPorCPFNoBanco(cpfFormatado);
         if (aluno.isPresent()) {
             throw new ResponseStatusException(HttpStatus.CONFLICT, "CPF não existe na base de dados");
         }
-        AlunoDTO alunoDTO = this.verificaEConverteAlunoRecuperado(aluno);
-        return  alunoDTO;
+        return this.verificaEConverteAlunoRecuperado(aluno);
     }
 
     public AlunoDTO recuperarAlunoPorId(String id){
         Optional<Aluno> aluno = recuperarAlunoPorIDNoBanco(id);
-        AlunoDTO alunoDTO = this.verificaEConverteAlunoRecuperado(aluno);
-        return  alunoDTO;
+        return this.verificaEConverteAlunoRecuperado(aluno);
     }
 
     public AlunoDTO lancaExcecaoSenaoExistirAlunoPorID(String id){
@@ -66,12 +62,10 @@ public class AlunoSelectService {
         if (!aluno.isPresent()) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Aluno não existe na base de dados");
         }
-        AlunoDTO alunoDTO = this.verificaEConverteAlunoRecuperado(aluno);
-        return  alunoDTO;
+        return this.verificaEConverteAlunoRecuperado(aluno);
     }
 
     public AlunoDTO recuperarAlunoETodasAsAvalicoes(String idAluno) {
-
         AlunoDTO alunoDTO = recuperarAlunoPorId(idAluno);
         if (!alunoDTO.getId().isEmpty()) {
             List<AvaliacaoDTO> avaliacaoDTOList = avaliacaoSelectService.recuperarListaDeAvaliacoesPeloIDAluno(idAluno);

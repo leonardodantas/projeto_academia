@@ -24,19 +24,17 @@ public class AlunoInsertService {
 
     public AlunoDTO inserirAluno(AlunoDTO alunoDTO) {
         alunoSelectService.lancaExcecaoSeJaExistirCPFNaBaseDeDados(alunoDTO.getCpf());
-        alunoDTO.setId(GeradorID.getInstance().gerarCodigo());
+        alunoDTO.setId(GeradorID.gerarCodigo());
         Aluno aluno = alunoAssembler.dtoParaEntidade(alunoDTO);
-        AlunoDTO alunoSalvo = this.inserirAlunoNoBanco(aluno);
-        return alunoSalvo;
+        return this.inserirAlunoNoBanco(aluno);
     }
 
     private AlunoDTO inserirAlunoNoBanco(Aluno aluno) {
         AlunoDTO alunoDTOSalvo;
-        aluno.setCpf(new ValidarCPF().formatarCPF(aluno.getCpf()));
+        aluno.setCpf(ValidarCPF.formatarCPF(aluno.getCpf()));
         try {
             Aluno alunoSalvo = iAlunoRepository.save(aluno);
             alunoDTOSalvo = alunoAssembler.entidadeParaDTO(alunoSalvo);
-
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
