@@ -38,8 +38,7 @@ public class CadastroInsertService {
         cadastroDTO.gerarIdCadastroEIdFormaPagamento();
         cadastroDTO = this.defineValoresDoCadastro(cadastroDTO);
         Cadastro cadastro = cadastroAssembler.dtoParaEntidade(cadastroDTO);
-        CadastroDTO cadastroSalvo = this.salvarNoBanco(cadastro);
-        return cadastroSalvo;
+        return this.salvarNoBanco(cadastro);
     }
 
     private CadastroDTO salvarNoBanco(Cadastro cadastro){
@@ -68,7 +67,6 @@ public class CadastroInsertService {
         }
         this.defineValoresDoCadastro(cadastroDTO);
         Cadastro cadastro = cadastroAssembler.dtoParaEntidade(cadastroDTO);
-        CadastroDTO cadastroSalvo = this.salvarNoBanco(cadastro);
-        return cadastroSalvo;
+        return this.salvarNoBanco(cadastro);
     }
 }
