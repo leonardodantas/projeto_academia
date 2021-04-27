@@ -31,7 +31,7 @@ public class AlunoInsertService {
 
     private AlunoDTO inserirAlunoNoBanco(Aluno aluno) {
         AlunoDTO alunoDTOSalvo;
-        aluno.setCpf(new ValidarCPF().formatarCPF(aluno.getCpf()));
+        aluno.setCpf(ValidarCPF.formatarCPF(aluno.getCpf()));
         try {
             Aluno alunoSalvo = iAlunoRepository.save(aluno);
             alunoDTOSalvo = alunoAssembler.entidadeParaDTO(alunoSalvo);
