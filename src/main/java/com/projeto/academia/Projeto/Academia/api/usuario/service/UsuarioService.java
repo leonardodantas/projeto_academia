@@ -19,8 +19,7 @@ public class UsuarioService {
     public UsuarioDTO salvarUsuario(UsuarioDTO usuarioDTO){
         usuarioDTO.gerarID();
         Usuario usuario = usuarioAssembler.dtoParaEntidade(usuarioDTO);
-        UsuarioDTO usuarioDTOSalvo = this.salvarUsuarioNoBanco(usuario);
-        return usuarioDTOSalvo;
+        return this.salvarUsuarioNoBanco(usuario);
     }
 
     private UsuarioDTO salvarUsuarioNoBanco(Usuario usuario){
