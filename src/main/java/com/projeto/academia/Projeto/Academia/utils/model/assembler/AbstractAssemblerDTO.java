@@ -6,26 +6,21 @@ import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Component
 public abstract class AbstractAssemblerDTO<entidade extends Entity,dto extends DataTransferObject> {
 
     public List<dto> muitasEntidadesParaMuitosDTOs(List<entidade> entidades){
-        List<dto> dtos = new ArrayList<>();
-        for (entidade entidad : entidades) {
-            dto dataTransferObject = entidadeParaDTO(entidad);
-            dtos.add(dataTransferObject);
-        }
-        return dtos;
+        return entidades.stream()
+                .map(this::entidadeParaDTO)
+                .collect(Collectors.toList());
     }
 
     public List<entidade> muitosDTOsParaMuitasEntidade(List<dto> dtos){
-        List<entidade> entidades = new ArrayList<>();
-        for (dto dt : dtos) {
-            entidade entidade = dtoParaEntidade(dt);
-            entidades.add(entidade);
-        }
-        return entidades;
+        return dtos.stream()
+                .map(this::dtoParaEntidade)
+                .collect(Collectors.toList());
     }
 
     public abstract dto entidadeParaDTO(entidade entidade);
