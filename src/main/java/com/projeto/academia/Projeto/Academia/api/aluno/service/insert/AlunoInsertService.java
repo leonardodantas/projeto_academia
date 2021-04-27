@@ -35,7 +35,6 @@ public class AlunoInsertService {
         try {
             Aluno alunoSalvo = iAlunoRepository.save(aluno);
             alunoDTOSalvo = alunoAssembler.entidadeParaDTO(alunoSalvo);
-
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
