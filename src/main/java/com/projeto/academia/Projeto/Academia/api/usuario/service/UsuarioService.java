@@ -23,7 +23,7 @@ public class UsuarioService {
     }
 
     private UsuarioDTO salvarUsuarioNoBanco(Usuario usuario){
-        UsuarioDTO usuarioDTO = new UsuarioDTO();
+        UsuarioDTO usuarioDTO;
         try {
             Usuario usuarioSalvo = iUsuarioRepository.save(usuario);
             usuarioDTO = usuarioAssembler.entidadeParaDTO(usuarioSalvo);
