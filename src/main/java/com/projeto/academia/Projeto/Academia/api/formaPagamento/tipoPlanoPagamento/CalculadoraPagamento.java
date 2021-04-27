@@ -21,15 +21,14 @@ public class CalculadoraPagamento {
     }
 
     private double validaValorCorretoParDesconto(CadastroDTO cadastroDTO){
-        double valorComDesconto = 0.0;
-        String valorParaPorcentagem = String.valueOf(cadastroDTO.getPorcentagemDesconto());
         double valorPorcentagem = cadastroDTO.getPorcentagemDesconto();
-        if (!valorParaPorcentagem.isEmpty()) {
-            if (valorPorcentagem > 0.0 && valorPorcentagem < 100) {
-                valorComDesconto = cadastroDTO.getValorSemDesconto() - cadastroDTO.getValorSemDesconto() * (cadastroDTO.getPorcentagemDesconto() / 100);
-            } else {
-                valorComDesconto = cadastroDTO.getValorSemDesconto();
-            }
+        return calculaValorDoDesconto(cadastroDTO, valorPorcentagem);
+    }
+
+    private double calculaValorDoDesconto(CadastroDTO cadastroDTO, double valorPorcentagem) {
+        double valorComDesconto = cadastroDTO.getValorSemDesconto();
+        if (valorPorcentagem > 0.0 && valorPorcentagem < 100) {
+            valorComDesconto = cadastroDTO.getValorSemDesconto() - cadastroDTO.getValorSemDesconto() * (cadastroDTO.getPorcentagemDesconto() / 100);
         }
         return valorComDesconto;
     }

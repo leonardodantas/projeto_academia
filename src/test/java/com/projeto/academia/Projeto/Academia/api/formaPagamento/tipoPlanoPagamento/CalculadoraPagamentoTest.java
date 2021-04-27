@@ -42,7 +42,6 @@ public class CalculadoraPagamentoTest {
         assertThat(valorComDesconto).isEqualTo(90);
     }
 
-
     @Test
     public void deveCalcularValorComDesconto0Porcento(){
         FormaPagamentoDTO formaPagamentoDTO = FormaPagamentoDTO.builder()
