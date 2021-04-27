@@ -19,8 +19,7 @@ public class FormaPagamentoService {
     private FormaPagamentoAssembler formaPagamentoAssembler;
 
     public FormaPagamento salvarFormaPagamento(FormaPagamento formaPagamento){
-        FormaPagamento formaPagamentoSalva = this.salvarFormaPagamentoNoBanco(formaPagamento);
-        return formaPagamento;
+        return this.salvarFormaPagamentoNoBanco(formaPagamento);
     }
 
     private FormaPagamento salvarFormaPagamentoNoBanco(FormaPagamento formaPagamento){

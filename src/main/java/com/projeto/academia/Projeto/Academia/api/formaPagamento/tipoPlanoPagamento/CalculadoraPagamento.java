@@ -12,14 +12,12 @@ public class CalculadoraPagamento {
     private ValoresPagamentoService valoresPagamentoService;
 
     public double calcularValorPagamento(TipoPlanoPagamento tipoPlanoPagamento){
-        double valorSemDesconto = valoresPagamentoService.recuperarValorPagamento(tipoPlanoPagamento);
-        return valorSemDesconto;
+        return valoresPagamentoService.recuperarValorPagamento(tipoPlanoPagamento);
     }
 
     public double calcularValorComDesconto(CadastroDTO cadastroDTO) {
         double valorComDesconto = 0.0;
-        valorComDesconto = this.validaValorCorretoParDesconto(cadastroDTO);
-        return valorComDesconto;
+        return this.validaValorCorretoParDesconto(cadastroDTO);
     }
 
     private double validaValorCorretoParDesconto(CadastroDTO cadastroDTO){
