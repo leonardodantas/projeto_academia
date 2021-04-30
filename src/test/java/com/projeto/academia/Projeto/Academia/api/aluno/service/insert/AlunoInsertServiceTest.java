@@ -49,7 +49,6 @@ public class AlunoInsertServiceTest {
                 .email("leonardo@dantas.com.br")
                 .build();
 
-        doReturn(alunoComCPF).when(alunoSelectService).recuperaAlunoPorCPF(cpf);
         doReturn(alunoSalvoNoBanco).when(iAlunoRepository).save(alunoSalvoNoBanco);
         doReturn(alunoSalvoNoBanco).when(alunoAssembler).dtoParaEntidade(alunoDTO);
         doReturn(alunoDTO).when(alunoAssembler).entidadeParaDTO(alunoSalvoNoBanco);
@@ -73,8 +72,6 @@ public class AlunoInsertServiceTest {
         AlunoDTO alunoComCPF = AlunoDTO.builder()
                 .id("123456789")
                 .build();
-
-        doReturn(alunoComCPF).when(alunoSelectService).recuperaAlunoPorCPF(cpf);
 
         alunoInsertService.inserirAluno(alunoDTO);
 

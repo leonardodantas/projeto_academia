@@ -42,9 +42,6 @@ public class AvaliacaoDeleteServiceTest {
                                 AvaliacaoDTO.builder().id("1").build(),
                                 AvaliacaoDTO.builder().id("2").build()))
                 .build();
-
-        when(alunoSelectService.recuperarAlunoETodasAsAvalicoes(idAAluno)).thenReturn(this.alunoDTO);
-
     }
 
     @Test
@@ -71,13 +68,11 @@ public class AvaliacaoDeleteServiceTest {
     @Test(expected = Exception.class)
     public void deveLancarExcecaoPorAlunoNaoExistir(){
         String idAluno = "1";
-        when(alunoSelectService.recuperarAlunoETodasAsAvalicoes(idAluno)).thenReturn(AlunoDTO.builder().build());
         avaliacaoDeleteService.removerTodasAsAvaliacoesDoAluno(idAluno);
     }
     @Test(expected = Exception.class)
     public void deveLancarExcecaoPorAvaliacoesNaoExistirem(){
         String idAluno = "1";
-        when(alunoSelectService.recuperarAlunoETodasAsAvalicoes(idAluno)).thenReturn(AlunoDTO.builder().id(idAluno).build());
         avaliacaoDeleteService.removerTodasAsAvaliacoesDoAluno(idAluno);
     }
 
