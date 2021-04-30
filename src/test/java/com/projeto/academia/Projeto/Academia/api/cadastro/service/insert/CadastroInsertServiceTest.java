@@ -1,5 +1,6 @@
 package com.projeto.academia.Projeto.Academia.api.cadastro.service.insert;
 
+import com.projeto.academia.Projeto.Academia.api.aluno.service.select.AlunoSelectService;
 import com.projeto.academia.Projeto.Academia.api.cadastro.model.Cadastro;
 import com.projeto.academia.Projeto.Academia.api.cadastro.model.assembler.CadastroAssembler;
 import com.projeto.academia.Projeto.Academia.api.cadastro.model.dto.CadastroDTO;
@@ -7,6 +8,7 @@ import com.projeto.academia.Projeto.Academia.api.cadastro.repository.ICadastroRe
 import com.projeto.academia.Projeto.Academia.api.cadastro.service.select.CadastroSelectService;
 import com.projeto.academia.Projeto.Academia.api.formaPagamento.model.FormaPagamento;
 import com.projeto.academia.Projeto.Academia.api.formaPagamento.model.dto.FormaPagamentoDTO;
+import com.projeto.academia.Projeto.Academia.api.formaPagamento.service.FormaPagamentoService;
 import com.projeto.academia.Projeto.Academia.api.formaPagamento.tipoPlanoPagamento.CalculadoraPagamento;
 import com.projeto.academia.Projeto.Academia.api.formaPagamento.tipoPlanoPagamento.TipoPlanoPagamento;
 import org.junit.Before;
@@ -37,6 +39,12 @@ public class CadastroInsertServiceTest {
 
     @Mock
     private CadastroSelectService cadastroSelectService;
+
+    @Mock
+    private AlunoSelectService alunoSelectService;
+
+    @Mock
+    private FormaPagamentoService formaPagamentoService;
 
     private CadastroDTO cadastroDTO;
 
