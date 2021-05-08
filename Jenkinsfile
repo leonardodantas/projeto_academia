@@ -25,8 +25,12 @@ pipeline {
         }
         stage('Docker build'){
             steps{
-                sh 'docker-compose build'
-                sh 'docker-compose up -d'
+                sh 'docker build -t backendjava . '
+            }
+        }
+        stage('Docker run'){
+            steps{
+                sh 'docker run -d backendjava '
             }
         }
     }
