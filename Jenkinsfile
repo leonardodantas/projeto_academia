@@ -23,5 +23,11 @@ pipeline {
                 sh 'mvn test'
             }
         }
+        stage('Docker build'){
+            steps{
+                sh 'docker-compose build'
+                sh 'docker-compose up'
+            }
+        }
     }
 }
