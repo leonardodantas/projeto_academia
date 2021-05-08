@@ -1,4 +1,4 @@
-FROM adoptopenjdk/openjdk11:alpine
+FROM adoptopenjdk/openjdk8:alpine
 MAINTAINER Leonardo Dantas
 RUN addgroup -S spring && adduser -S spring -G spring
 USER spring:spring
