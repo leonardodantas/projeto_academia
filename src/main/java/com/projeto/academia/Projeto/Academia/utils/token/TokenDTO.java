@@ -1,20 +1,22 @@
 package com.projeto.academia.Projeto.Academia.utils.token;
 
+import lombok.Getter;
+
+@Getter
 public class TokenDTO {
 
+    private static final String BEARER = "Bearer";
+
     private final String token;
-    private final String tipo;
+    private final String type;
 
-    public TokenDTO(String token, String tipo) {
+    private TokenDTO(String token, String type) {
         this.token = token;
-        this.tipo = tipo;
+        this.type = type;
     }
 
-    public String getToken() {
-        return token;
+    public static TokenDTO bearerOf(String token) {
+        return new TokenDTO(token, BEARER);
     }
 
-    public String getTipo() {
-        return tipo;
-    }
 }

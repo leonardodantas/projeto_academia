@@ -1,6 +1,6 @@
 package com.projeto.academia.Projeto.Academia.config.security.service;
 
-import com.projeto.academia.Projeto.Academia.api.usuario.model.Usuario;
+import com.projeto.academia.Projeto.Academia.api.models.entitys.User;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
@@ -19,16 +19,16 @@ public class TokenService {
     @Value("${jwt.secret}")
     private String secret;
 
-    public String gerarToken(Authentication authentication) {
-        Usuario logado = (Usuario) authentication.getPrincipal();
-        Date hoje = new Date();
-        Date dataExpiracao = new Date(hoje.getTime() + Long.parseLong(expiration));
+    public String generateToken(Authentication authentication) {
+        User user = (User) authentication.getPrincipal();
+        Date today = new Date();
+        Date expirationDate = new Date(today.getTime() + Long.parseLong(expiration));
 
         return Jwts.builder()
                 .setIssuer("API do Controle de Grupos")
-                .setSubject(logado.getId().toString())
-                .setIssuedAt(hoje)
-                .setExpiration(dataExpiracao)
+                .setSubject(user.getId())
+                .setIssuedAt(today)
+                .setExpiration(expirationDate)
                 .signWith(SignatureAlgorithm.HS256, secret)
                 .compact();
     }
@@ -42,7 +42,7 @@ public class TokenService {
         }
     }
 
-    public String getIdUsuario(String token) {
+    public String getIdUser(String token) {
         Claims claims = Jwts.parser().setSigningKey(this.secret).parseClaimsJws(token).getBody();
         return String.valueOf(claims.getSubject());
     }

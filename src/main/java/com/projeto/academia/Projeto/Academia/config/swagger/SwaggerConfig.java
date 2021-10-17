@@ -10,6 +10,7 @@ import springfox.documentation.builders.ApiInfoBuilder;
 import springfox.documentation.builders.PathSelectors;
 import springfox.documentation.builders.RequestHandlerSelectors;
 import springfox.documentation.service.ApiInfo;
+import springfox.documentation.service.Tag;
 import springfox.documentation.spi.DocumentationType;
 import springfox.documentation.spring.web.plugins.Docket;
 import springfox.documentation.swagger2.annotations.EnableSwagger2;
@@ -23,6 +24,13 @@ public class SwaggerConfig implements WebMvcConfigurer {
                 .select()
                 .apis(RequestHandlerSelectors.basePackage("com.projeto.academia.Projeto.Academia.api"))
                 .build()
+                .tags(
+                        new Tag("Autenticação", "",1),
+                        new Tag("Cadastro", "", 2),
+                        new Tag("Avaliação", "", 3),
+                        new Tag("Alunos", "", 4),
+                        new Tag("Usuarios", "", 5)
+                )
                 .apiInfo(metaData());
     }
 

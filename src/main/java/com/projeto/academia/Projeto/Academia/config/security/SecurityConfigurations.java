@@ -1,8 +1,8 @@
 package com.projeto.academia.Projeto.Academia.config.security;
 
-import com.projeto.academia.Projeto.Academia.api.usuario.repository.IUsuarioRepository;
-import com.projeto.academia.Projeto.Academia.config.security.service.AutenticacaoService;
-import com.projeto.academia.Projeto.Academia.config.security.service.AutenticacaoViaTokenFilter;
+import com.projeto.academia.Projeto.Academia.api.repositorys.user.IUserRepository;
+import com.projeto.academia.Projeto.Academia.config.security.service.AuthenticationService;
+import com.projeto.academia.Projeto.Academia.config.security.service.AuthenticationTokenFilter;
 import com.projeto.academia.Projeto.Academia.config.security.service.TokenService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -26,10 +26,10 @@ public class SecurityConfigurations extends WebSecurityConfigurerAdapter {
     private TokenService tokenService;
 
     @Autowired
-    private IUsuarioRepository usuarioRepository;
+    private IUserRepository userRepository;
 
     @Autowired
-    private AutenticacaoService autenticacaoService;
+    private AuthenticationService authenticationService;
 
     @Override
     @Bean
@@ -39,7 +39,7 @@ public class SecurityConfigurations extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-        auth.userDetailsService(autenticacaoService).passwordEncoder(NoOpPasswordEncoder.getInstance());
+        auth.userDetailsService(authenticationService).passwordEncoder(NoOpPasswordEncoder.getInstance());
     }
 
     @Override
@@ -67,7 +67,7 @@ public class SecurityConfigurations extends WebSecurityConfigurerAdapter {
                 .anyRequest().denyAll()
                 .and().cors().and().csrf().disable()
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
-                .and().addFilterBefore(new AutenticacaoViaTokenFilter(tokenService, usuarioRepository), UsernamePasswordAuthenticationFilter.class);
+                .and().addFilterBefore(AuthenticationTokenFilter.of(tokenService, userRepository), UsernamePasswordAuthenticationFilter.class);
     }
 
     @Override
